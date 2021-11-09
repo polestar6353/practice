@@ -9,7 +9,7 @@
 	a:hover {color: red; font-size: 20pt; font-weight: bold;}
 	#LOG-IN{
 	 font-size:26pt; font-weight: bold; 
-	 background:"greenyellow"; height:150; 
+	 background:"yellow"; height:150; 
 	}
 </style>
 
@@ -47,7 +47,7 @@
 	  <form name="myform"  method="post" action="loginSave.jsp">
 		<tr>
 			<td width=350> <b>userid: </b></td>
-			<td> <input type="text" name="userid" id="userid"></td>
+			<td> <input type="text" name="userid" id="userid" value="sky"></td>
 			
 			<td rowspan=3 align="center">
 			 <input type="submit"  value="LOG-IN" id="LOG-IN" >
@@ -57,7 +57,7 @@
 		<tr>
 			<td width=350><b>userpw: </b> </td>
 			<td>
-			  <input type="password"  name="pwd" id="pwd">       
+			  <input type="password"  name="pwd" id="pwd" value="1234">       
 			</td>
 		</tr>
 		<tr>

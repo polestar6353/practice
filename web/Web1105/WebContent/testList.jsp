@@ -37,16 +37,18 @@
   	</tr>  	 	
 <%
 String path="C:\\Users\\jh\\Desktop\\자바자료\\workspaceJSP\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\Web1105\\storage\\";
+int Tcode=0;
 String Ttitle="";
 int Tpay=0;
 String Tgender="";
 Date Tdate;
 String Timage="";
-
+int count=0;
 try{
 	msg="select * from test";
 	RS=ST.executeQuery(msg);
 	while(RS.next()){
+		Tcode=RS.getInt("code");	
 		Ttitle=RS.getString("title");
 		Tpay=RS.getInt("pay");	
 		Tgender=RS.getString("gender");
@@ -55,7 +57,7 @@ try{
 	
 %>	
 	<tr>
-	<td><%=Ttitle %></td>
+	<td><a href="testDetail.jsp?idx=<%=Tcode%>"><%=Ttitle %></td>
 	<td><%=Tpay %></td>
 	<td><%=Tgender %></td>
 	<td><%=Tdate %></td>

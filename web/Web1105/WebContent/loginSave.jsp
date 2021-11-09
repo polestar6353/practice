@@ -17,12 +17,13 @@
   if(RS.next()==true){ Gtotal=RS.getInt("cnt"); }
 		  
   if(Gtotal>0){
-  	 session.setAttribute("naver", usera); //userid값을 가짜변수 세션naver가짜이름에 넘김
-  	  
-  	 Cookie ck = new Cookie(usera, usera); //웹서버에서 제공되는 쿠키내장클래스 객체화 
+   	 //jsp에서 쿠키는 내장클래스, 쿠키등록 response
+  	 session.setAttribute("naver", usera); //세션   
+  	 
+  	 Cookie ck = new Cookie("google", usera); //쿠키  
   	 response.addCookie(ck); //쿠키추가등록
   	 System.out.println("login처리 성공 세션값 , 쿠키값 설정 성공");
-  	 response.sendRedirect("guestList.jsp");
+  	 response.sendRedirect("index.jsp?idx="+usera);
   %>
    <font size=7 color=blue>
      <b><%= usera %>님 로그인 성공!!!</b> <br>

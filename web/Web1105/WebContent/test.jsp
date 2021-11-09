@@ -16,7 +16,20 @@
    </script>
 </head>
 <body>
-	<h2> .jsp </h2>
+	<h2> test.jsp </h2>
+	<h2>
+		세션id:<%= session.getId() %>
+	</h2>
 	
+
+<h2>쿠키값만 출력 </h2>	
+<%
+Cookie[] ck = request.getCookies();
+if(ck != null){
+  for(int i=0; i<ck.length; i++){
+	 out.print("test.jsp "+ ck[i].getName() + ":" + ck[i].getValue());
+   }
+}
+%>
 </body>
 </html>
