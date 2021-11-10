@@ -45,6 +45,10 @@
        int dcode, dpay ;  
        String dtitle,demail ;  
        
+       int Bsabun, Bhit, Brn, Bpage;
+       String Bname, Btitle;
+       Date Bdate;
+       
 	%>
 	
 	<%

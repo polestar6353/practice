@@ -22,13 +22,28 @@
  
 </head>
 <body>
-
-<h2> testDownload.jsp.jsp 다운로드문서 </h2>   
+ 
 <%
- try{ 
+ try{
+   String path = application.getRealPath("storage");
    String data = request.getParameter("idx"); 
    String fname = request.getParameter("fname"); 
-     
+   File file = new File(path,fname);
+   System.out.println(path);
+   
+   response.setHeader("content-Disposition","attachment;filename="+fname);
+   
+   InputStream is = new FileInputStream(file);
+   OutputStream os = response.getOutputStream();
+   
+   byte[] bt = new byte[(int)file.length()];
+   is.read(bt,0,bt.length);
+   os.write(bt);
+   
+   is.close();
+   os.close();
+   
+   
   }catch(Exception ex){ System.out.println("testDownload에러 " + ex.toString()); }
  %> 
   
