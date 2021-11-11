@@ -49,6 +49,7 @@
        String Bname, Btitle;
        Date Bdate;
        
+       int GFindtotal, GGtotal;
 	%>
 	
 	<%

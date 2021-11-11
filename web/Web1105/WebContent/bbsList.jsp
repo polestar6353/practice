@@ -8,70 +8,72 @@
  <title>bbsList.jsp</title>
  <style type="text/css">
    *{font-size:16pt;}
-   a{font-size:16pt; text-decoration:none;  font-family: Comic Sans MS ; }
-   a:hover{font-size:20pt; text-decoration:underline; color:green;  font-family: Comic Sans MS ; }
+   a{font-size:16pt; text-decoration:none;   font-family: Comic Sans MS ; }
+   a:hover{font-size:20pt; text-decoration:underline;  font-family: Comic Sans MS ; }
  </style>
 </head>
 
 <body>
 <h2>bbsList.jsp문서 페이지&검색</h2>
 <%
-String searchKey=request.getParameter("keyfield");
-String searchWord=request.getParameter("keyword");
-msg= "select count(*) as cnt from bbs";
-
-if(searchKey!=null){
-	if(searchKey.equals("")){
-		response.sendRedirect("bbsList.jsp");
-	}
-	 if(searchKey.equals("name")){
-		 msg+=" where name like '%"+searchWord+"%'";
-	 }else if(searchKey.equals("title")){
-		 msg+=" where title like '%"+searchWord+"%'";
-	 }else if(searchKey.equals("email")){
-		 msg+=" where email like '%"+searchWord+"%'";
-	 }
-	 }
+ msg = "select count(*) as cnt from bbs "; //guest기술하면 bbs
  ST=CN.createStatement();
  RS=ST.executeQuery(msg);
- if(RS.next()==true){Gtotal=RS.getInt("cnt"); }
+ if(RS.next()==true){ GGtotal=RS.getInt("cnt"); }
 %>
 
 <%
-
- int startRow,endRow;//where rn between  start시작행번호  and  끝행end번호
+ int startRow,endRow;
  String pnum;
- int pageNUM;  //pageNum문자열을 숫자로 변화
- int pageCount, startpage, endpage ;  //pageCount=32페이지  startpage=1  endpage=10
- int tmp ; //시작페이지구할때 편하게 사용할 변수 
- String returnpage; 
+ int pageNUM; 
+ int pageCount, startpage, endpage , tmp ; 
+   
+ //검색관련 4개 변수
+ String sqry="";
+ String skey="", sval="";
+ String returnpage;
+  
+ skey = request.getParameter("keyfield"); //검색키=필드  name
+ sval = request.getParameter("keyword");  //검색어키워드  b
+ if(skey=="" || sval=="" || skey==null || sval==null){
+	 skey="title";
+	 sval="";
+ }
  
- pnum = request.getParameter("pageNum");   //문자화[7]
- if(pnum==null || pnum==""){ pnum="1"; }   //저장및삭제 
- pageNUM = Integer.parseInt(pnum); //숫자화 
+ //이름조회  name like  '%b%'  [1][2클릭][3][4][5][6]
+ //http://localhost:8080/Web1105/bbsList.jsp?pageNum=2&keyfield=name&keyword=b
+ //http://localhost:8080/Web1105/bbsList.jsp?pageNum=2
+ returnpage="&keyfield="+skey+"&keyword="+sval;
  
- startRow = (pageNUM-1)*10 + 1;  //시작행번호
- endRow  = pageNUM*10 ;  //끝행번호
- //System.out.println("몫계산 6/10="+ (6/10));  //0
- //System.out.println("나머지 6%10="+ (6%10));  //6
- //전체레코드갯수 316갯수/10=32, 만약에 310/10=31
+ sqry = " where " + skey +" like '%"+sval+"%' "; 
+ String find="select count(*) as cnt from bbs  where " + skey +" like '%"+sval+"%' ";
+ System.out.println(find);
+ ST = CN.createStatement();
+ RS = ST.executeQuery(find);
+ if(RS.next()==true){ Gtotal = RS.getInt("cnt"); }
+ 
+ pnum = request.getParameter("pageNum");  //[이전][21][22][25선택] ~ [29][30][다음]
+ if(pnum==null || pnum==""){ pnum="1"; }   
+ pageNUM = Integer.parseInt(pnum);  //문자25를 숫자25로 변환
+ 
+ startRow = (pageNUM-1)*10 + 1;  //25-1*10+1 ==> 241
+ endRow  = pageNUM*10 ;   //25*10 ==> 250
+
  if(Gtotal%10==0){ pageCount = Gtotal/10; }
- else{ pageCount = (Gtotal/10)+ 1; }  //총페이지갯수 32
+ else{ pageCount = (Gtotal/10)+ 1; }  //32pageCount = 316/10+1 
  
- tmp = (pageNUM-1)%10 ;  //[1][2] ~[7선택] [9][10][다음] 결과나머지값 6  
- startpage = pageNUM-tmp; //1
- endpage = startpage+9 ; //10
- System.out.println("pageNUM="+pageNUM+" pageCount="+pageCount+" startpage="+startpage+" endpage=" + endpage);
+ tmp = (pageNUM-1)%10;   //25-1%10 ==> 4
+ startpage=pageNUM-tmp;  //25-4 ==> 21
+ endpage=startpage+9;    //21+9 ==> 30 
+ if(endpage>pageCount){ endpage=pageCount ; } //[이전][31][32] 출력이 됨 
 %>
-
-
 
 <table border="1" width="900" cellspacing="0" cellpadding="3px">
 <tr>
    <td colspan=7 align="right">
         <a href="#">[로그인]</a>
-        <a href="bbsWrite.jsp">[bbs글쓰기]</a>
-   		총레코드갯수: <%= Gtotal %> &nbsp; &nbsp;
+        <a href="bbsList.jsp">[bbs리스트]</a>
+   		레코드갯수: <%=Gtotal %>/<%= GGtotal %> &nbsp; &nbsp;
    </td>
 </tr>
 <tr bgcolor="yellow">
@@ -80,19 +82,12 @@ if(searchKey!=null){
 </tr>	
 <%
 try{
- //msg="select rownum, b.* from bbs b ";
- 
- if(searchKey!=null){
- if(searchKey.equals("name")){
-	 msg="select * from (select rownum rn, b.* from bbs b where name like '%"+searchWord+"%')  where rn between " + startRow +" and "+ endRow;
- }else if(searchKey.equals("title")){
-	 msg="select * from (select rownum rn, b.* from bbs b where title like '%"+searchWord+"%')  where rn between " + startRow +" and "+ endRow;
- }else if(searchKey.equals("email")){
-	 msg="select * from (select rownum rn, b.* from bbs b where email like '%"+searchWord+"%')  where rn between " + startRow +" and "+ endRow;
- }}else{
-	 msg="select * from (select rownum rn, b.* from bbs b)  where rn between " + startRow +" and "+ endRow; 
- }
- 
+ //msg = "select rownum rn, b.* from bbs b where name like '%b%' ";
+ String a = "select * from (";
+ String b = "select rownum rn,sabun,name,title,wdate,pay,hit,email from ";
+ String c = "(select * from bbs where "+skey+" like '%"+sval+"%')";
+ String d = ") where rn between " + startRow + " and " + endRow;
+ msg = a+b+c+d;
    System.out.println(msg);
    ST = CN.createStatement();
    RS = ST.executeQuery(msg);
@@ -107,9 +102,9 @@ try{
 %>    	
   <tr>
     <td>  <%= Grn %> </td>
-    <td><a href="bbsDetail.jsp?idx=<%=Gsabun %>"> <%= Gsabun %> </a></td>
+    <td>  <%= Gsabun %> </td>
     <td>  <%= Gname %>  </td>
-    <td>  <%= Gtitle %>  </td>
+    <td> <a href="bbsDetail.jsp?idx=<%=Gsabun%>">  <%= Gtitle %>  </a> </td>
     <td>  <%= Gwdate %> </td>
     <td>  <%= Ghit %> </td>
     <td>  <%= Gemail %> </td>
@@ -119,36 +114,26 @@ try{
 }catch(Exception ex){System.out.println("bbs데이터전체출력 에러" + ex);}
 %>	
  <tr align="center">
- 	<td colspan="7">
+ 	<td colspan="7">  
  	  <%
+ 	  	//이전표시 startpage>10
+ 	    if(startpage>10){
+ 		  out.println("<a href=bbsList.jsp?pageNum="+(startpage-10)+">[이전]</a>");
+ 	    }
+ 	  	
+ 	    // [1] ~ [10]	 
+ 	    for(int i=startpage; i<=endpage; i++){
+ 	    	if(i==pageNUM){
+ 	    	  out.println("<font style='font-size:26pt; color:red'>["+i+"]</font>");	
+ 	    	}else{
+ 		      out.println("<a href=bbsList.jsp?pageNum="+(i+returnpage)+">["+i+"]</a>");
+ 	    	}
+ 	    }
  	  
- 	  if(startpage>10){
- 		  if(searchKey!=null){
- 			out.println("<a href=bbsList.jsp?pageNum=1&keyfield="+searchKey+"&keyword="+searchWord+">[처음으로]</a>");
- 	 		out.println("<a href=bbsList.jsp?pageNum="+(startpage-10)+"&keyfield="+searchKey+"&keyword="+searchWord+">[이전]</a>");
- 		  }else{
-	 		out.println("<a href=bbsList.jsp?pageNum=1>[처음으로]</a>");
-	 		out.println("<a href=bbsList.jsp?pageNum="+(startpage-10)+">[이전]</a>");
- 	  }}
- 	  
- 	   for(int i=startpage; i<=endpage; i++){
- 		  if(searchKey!=null){
- 			 out.println("<a href=bbsList.jsp?pageNum="+i+"&keyfield="+searchKey+"&keyword="+searchWord+">["+i+"]</a>");  
- 		  }
- 		  else{
- 		 out.println("<a href=bbsList.jsp?pageNum="+i+">["+i+"]</a>");}
- 		 if(i==pageCount){
- 			 break;
- 		 }
- 	   }
- 	  
- 	  //다음 endpage<pageCount적으면  10<32  20<32  30<32
+ 	  //다음표시 endpage<32
  	  if(endpage<pageCount){
- 		  if(searchKey!=null){
- 			 out.println("<a href=bbsList.jsp?pageNum="+(startpage+10)+"&keyfield="+searchKey+"&keyword="+searchWord+">[다음]</a>");
- 		  }else{
- 		out.println("<a href=bbsList.jsp?pageNum="+(startpage+10)+">[다음]</a>");  
- 	  }}
+ 		out.println("<a href=bbsList.jsp?pageNum="+(startpage+10)+">[다음]</a>");
+ 	  }
  	  %>  
  	</td>
  </tr>
@@ -168,17 +153,7 @@ try{
  	</td>
  </tr>
  
-  <tr align="center">
- 	<td colspan="7">
- 	    <a href="bbsWrite.jsp">[bbs등록]</a>
-		<a href="bbsList.jsp">[bbs전체출력]</a>
-		<a href="testList.jsp">[testList]</a>
- 	</td>
- </tr>
 </table>
-		
-
-
 </body>
 </html>
 
