@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-  <title>BBB</title>
+  <title>CCC</title>
   
    <style type="text/css">
      *{font-size:16pt;}
@@ -16,18 +16,17 @@
    </script>
 </head>
 <body>
-	<h2> BBB.jsp include문서사용 </h2>
-	<h2> BBB.jsp include문서사용 </h2>
-	<img src="images/aaa.gif"> <img src="images/aaa.gif">
-	<img src="images/aaa.gif"> <img src="images/aaa.gif"> 
-	<img src="images/aaa.gif"> <p>
-	
-	    
-		
+
+<hr color="red" size=5>
+<div align="center">
+	<h2> CCC.jsp forward문서사용 </h2>
+	<h2> CCC.jsp forward문서사용 </h2>
+	<img src="images/a1.png">
 	<p></p>
 	<a href="AAA.jsp">[AAA]</a>
 	<a href="guestList.jsp">[guestList]</a>
-	<a href="guestWrite.jsp">[guestWrite]</a>
+	<a href="bbsList.jsp">[bbsList]</a>
+</div>
 </body>
 </html>
 

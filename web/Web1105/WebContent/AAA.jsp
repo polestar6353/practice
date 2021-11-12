@@ -16,16 +16,15 @@
    </script>
 </head>
 <body>
-	<img src="images/a1.png"><p>
-	Web1105플젝 a태그으로 값 전달 테스트 <br>
-	Web1105플젝 a태그으로 값 전달 테스트 <br>
-	<%
-	    //AAA.jsp문서=guestList.jsp문서
-		int Gcode = 5567 ;
-		String Gtitle = "bitcamp" ;
-	%>
-	<a href="BBB.jsp?idx=<%=Gcode%>">[BBB]</a>
-	<a href="guestList.jsp">[guestList]</a>
+	<img src="images/a3.png"><p>
+	Web1105플젝 AAA.jsp jsp 테스트 <br>
+	Web1105플젝 AAA.jsp jsp 테스트 <br>
+	
+	<jsp:forward page="CCC.jsp"></jsp:forward>
+	
+	
+	<h2>AAA.jsp문서 last마지막 마지막문장</h2>
+	
 </body>
 </html>
 

@@ -13,7 +13,7 @@
  </style>
 </head>
 <body>
-<p></p>
+
 <%
 //bbsDetail.jsp단독실행금지 
 int data = Integer.parseInt(request.getParameter("idx"));
@@ -31,16 +31,12 @@ if(RS.next()==true) {
 
 msg = "update bbs set hit=hit +1 where  sabun = " + data;
 ST.executeUpdate(msg);
-System.out.println("bbs테이블 조회수 1증가 성공") ;
+//System.out.println("bbs테이블 조회수 1증가 성공") ;
 
 %>	    
 	
 <table border="1" width="900"  cellspacing="0" cellpadding="20px">
-   <tr align="center">
-   	 <td colspan="2">
-   	 	<font style="font-size:26pt;color:blue; font-weight:bold;"> >>> <%=Gname%>님의 bbsDetail.jsp <<<  </font> 
-   	  </td>
-   </tr>
+
   	<tr>
   		<td width="250"  rowspan="4" align="center" >
   		  <img src="images/bbb.gif" width="350" height="200"> 
@@ -66,7 +62,11 @@ System.out.println("bbs테이블 조회수 1증가 성공") ;
 		</td>
   	</tr>
  </table>
-
+ 
+  <p>
+  <jsp:include page="bbsReply.jsp">
+  	<jsp:param value="<%=Gsabun%>" name="Ridx"/>
+  </jsp:include> 
 </body>
 </html>
 

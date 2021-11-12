@@ -39,7 +39,7 @@
        java.util.Date Gdate, Gwdate ;
        String Gmsg, msg, Gdata;
        
-       int Rrn, Rnum, Rsabun, Rcode;
+       int Rrn, Rnum, Rsabun;
        String Rwriter, Rcontent;
        
        int dcode, dpay ;  

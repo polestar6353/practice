@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"    pageEncoding="UTF-8"%>
 <%@ include file="ssi.jsp" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 
 <!DOCTYPE html>
 <html>
@@ -14,7 +15,8 @@
 </head>
 
 <body>
-<h2>bbsList.jsp문서 페이지&검색</h2>
+<jsp:include page="bbsHeader.jsp" />
+
 <%
  msg = "select count(*) as cnt from bbs "; //guest기술하면 bbs
  ST=CN.createStatement();
@@ -47,12 +49,12 @@
  
  sqry = " where " + skey +" like '%"+sval+"%' "; 
  String find="select count(*) as cnt from bbs  where " + skey +" like '%"+sval+"%' ";
- System.out.println(find);
+ //System.out.println(find);
  ST = CN.createStatement();
  RS = ST.executeQuery(find);
  if(RS.next()==true){ Gtotal = RS.getInt("cnt"); }
  
- pnum = request.getParameter("pageNum");  //[이전][21][22][25선택] ~ [29][30][다음]
+ pnum = request.getParameter("pageNum");  //[이전][21][22][25연식씨선택] ~ [29][30][다음]
  if(pnum==null || pnum==""){ pnum="1"; }   
  pageNUM = Integer.parseInt(pnum);  //문자25를 숫자25로 변환
  
@@ -68,6 +70,7 @@
  if(endpage>pageCount){ endpage=pageCount ; } //[이전][31][32] 출력이 됨 
 %>
 
+
 <table border="1" width="900" cellspacing="0" cellpadding="3px">
 <tr>
    <td colspan=7 align="right">
@@ -78,17 +81,21 @@
 </tr>
 <tr bgcolor="yellow">
 	<td>행번호</td> <td>사 번</td>  <td>이 름</td>  <td>제 목</td>  
-	<td>날 짜</td> <td>조회수</td>  <td>조회수</td>    
+	<td>날 짜</td> <td>조회수</td>  <td>메 일</td>    
 </tr>	
 <%
 try{
- //msg = "select rownum rn, b.* from bbs b where name like '%b%' ";
+SimpleDateFormat sdf =  new SimpleDateFormat("yyyy-MM-dd EEE요일 aaa");
+java.util.Date dt = new java.util.Date();
+String display = sdf.format(dt);  //현재날짜로 테스트 
+//System.out.println(display);
+int Rcount=0;
  String a = "select * from (";
  String b = "select rownum rn,sabun,name,title,wdate,pay,hit,email from ";
  String c = "(select * from bbs where "+skey+" like '%"+sval+"%')";
  String d = ") where rn between " + startRow + " and " + endRow;
  msg = a+b+c+d;
-   System.out.println(msg);
+   //System.out.println(msg);
    ST = CN.createStatement();
    RS = ST.executeQuery(msg);
   while(RS.next()==true) {
@@ -96,16 +103,25 @@ try{
      Gsabun = RS.getInt("sabun");
      Gname = RS.getString("name");
      Gtitle = RS.getString("title");
-     Gwdate = RS.getDate("wdate");
+     Gwdate = RS.getTimestamp("wdate");
+     display= sdf.format(Gwdate);
      Ghit = RS.getInt("hit");
      Gemail = RS.getString("email");
+	 String innerMsg="select count(*) from bbsreply where sabun="+Gsabun;
+	 Statement innerST = CN.createStatement();
+	 ResultSet innerRS = innerST.executeQuery(innerMsg);
+	 if(innerRS.next()){
+	 	Rcount = innerRS.getInt("count(*)");}
 %>    	
   <tr>
     <td>  <%= Grn %> </td>
     <td>  <%= Gsabun %> </td>
     <td>  <%= Gname %>  </td>
-    <td> <a href="bbsDetail.jsp?idx=<%=Gsabun%>">  <%= Gtitle %>  </a> </td>
-    <td>  <%= Gwdate %> </td>
+    <td> <a href="bbsDetail.jsp?idx=<%=Gsabun%>">  <%= Gtitle %>
+    <%if(Rcount!=0){out.println("<span style=font-size:12px;>["+Rcount+"]</span>");} %>  
+    
+    	</a> </td>
+    <td>  <%= display %> </td>
     <td>  <%= Ghit %> </td>
     <td>  <%= Gemail %> </td>
   </tr>  
@@ -151,9 +167,10 @@ try{
  	      <input type="submit" value="bbs검색">
  	  </form>
  	</td>
- </tr>
- 
+ </tr> 
 </table>
+<p>
+<jsp:include page="bbsFooter.jsp"></jsp:include>
 </body>
 </html>
 
