@@ -90,11 +90,12 @@ java.util.Date dt = new java.util.Date();
 String display = sdf.format(dt);  //현재날짜로 테스트 
 //System.out.println(display);
 int Rcount=0;
- String a = "select * from (";
- String b = "select rownum rn,sabun,name,title,wdate,pay,hit,email from ";
- String c = "(select * from bbs where "+skey+" like '%"+sval+"%')";
- String d = ") where rn between " + startRow + " and " + endRow;
- msg = a+b+c+d;
+String a ="select * from ( " ;
+String b =" select rownum  rn,  b.* ,  (select count(*) from bbsreply r  where b.sabun=r.sabun) as rcnt  from " ;
+String y = " ( select * from bbs " + sqry + " order by sabun )  b " ;
+String c =" ) where rn between " + startRow + "  and  " + endRow  ;
+
+ msg = a+b+y+c;
    //System.out.println(msg);
    ST = CN.createStatement();
    RS = ST.executeQuery(msg);
@@ -107,20 +108,14 @@ int Rcount=0;
      display= sdf.format(Gwdate);
      Ghit = RS.getInt("hit");
      Gemail = RS.getString("email");
-	 String innerMsg="select count(*) from bbsreply where sabun="+Gsabun;
-	 Statement innerST = CN.createStatement();
-	 ResultSet innerRS = innerST.executeQuery(innerMsg);
-	 if(innerRS.next()){
-	 	Rcount = innerRS.getInt("count(*)");}
+	 Rcount = RS.getInt("rcnt");
+	 
 %>    	
   <tr>
     <td>  <%= Grn %> </td>
     <td>  <%= Gsabun %> </td>
     <td>  <%= Gname %>  </td>
-    <td> <a href="bbsDetail.jsp?idx=<%=Gsabun%>">  <%= Gtitle %>
-    <%if(Rcount!=0){out.println("<span style=font-size:12px;>["+Rcount+"]</span>");} %>  
-    
-    	</a> </td>
+    <td> <a href="bbsDetail.jsp?idx=<%=Gsabun%>"><%=Gtitle %> <% if (Rcount>0){ out.println("<span style=font-size:10px; color=red>["+Rcount+"]</span>"); }%> </a></td>
     <td>  <%= display %> </td>
     <td>  <%= Ghit %> </td>
     <td>  <%= Gemail %> </td>
