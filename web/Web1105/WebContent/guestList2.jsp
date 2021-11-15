@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"    pageEncoding="UTF-8"%>
+
+<%@ page import="net.bitcamp.guest.GuestDAO" %>
 <%@ page import="net.bitcamp.guest.GuestDTO" %>
 <%@ page import="java.util.ArrayList" %>
 
@@ -15,12 +17,11 @@
 </head>
 
 <body>
-<h2>guestList.jsp전체출력</h2>	
-
-<jsp:useBean id="mydao" class="net.bitcamp.guest.GuestDAO"/>
-
-
-<% int Gtotal = mydao.dbCountAll();%>
+<h2>guestList.jsp전체출력 자바와 바로 연결</h2>	
+<%
+  GuestDAO  mydao = new GuestDAO();
+  int Gtotal = mydao.dbCountAll();
+%>
 
 <table border="1" width="900" cellspacing="0" cellpadding="5px">
 <tr>
