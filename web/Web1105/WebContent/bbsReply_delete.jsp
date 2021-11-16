@@ -27,7 +27,7 @@ int isabun = Integer.parseInt(request.getParameter("rsabun"));
    msg ="delete bbsreply where num="+inum;
    ST=CN.createStatement();
    ST.executeQuery(msg);
-   response.sendRedirect("bbsDetail.jsp?idx="+isabun);
+   response.sendRedirect("bbsDetail.bit?idx="+isabun);
 
  }catch(Exception ex){System.out.println("bbsreply_delete.jsp 댓글삭제에러:" + ex.toString());}
 %>	

@@ -2,13 +2,15 @@ package net.bitcamp.guest.mvc;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.rmi.ServerException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.bitcamp.guest.GuestDAO;
+import net.bitcamp.guest.GuestDTO;
 
 
 @WebServlet("/guestInsert.do") //가짜이름
@@ -36,15 +38,27 @@ public class GuestInsert extends HttpServlet {
 		
 
 		response.setContentType("text/html;charset=UTF-8");
-		//이걸 넣어줘야 한글이 깨지지 않는다.
+		//이걸 넣어줘야 한글이 깨지지 않는다
 		
 		//out이라는 객체를 만든것이라 그냥 out.println만 쓰면 한글이 깨진다.
 		PrintWriter out = response.getWriter();
 		
-		out.println("<h2>GuestInsert.java</h2>");//자바문장에 html태그기술
-		out.println("<img src='images/aaa.gif'></img>");
-		out.println("<img src='images/aaa.gif'></img>");
-		out.println("<img src='images/aaa.gif'></img> <br>");
+		out.println("<h2>GuestInsert.java서블릿문서 실습 </h2>");  
+		out.println("<img src='images/a1.png'></img> <br>");
+	
+		int dcode =  Integer.parseInt(request.getParameter("code"));
+		String dtitle =  request.getParameter("title");
+		int dpay =  Integer.parseInt(request.getParameter("pay"));
+		String demail =  request.getParameter("email");
+		System.out.println(dcode +" " + dtitle +" " + dpay + " " + demail);
+		
+		GuestDTO dto = new GuestDTO();
+		GuestDAO dao = new GuestDAO();
+		
+		dao.dbInsert(dcode, dtitle, dpay, demail);
+		System.out.println("GuestInsert컨트롤 guest테이블 저장성공했습니다 ");
+		
+		response.sendRedirect("guestList");//저장성공후 서블릿문서 리턴 
 	}//end
 	
 	//<%@ page language="java" contentType="text/html; charset=UTF-8"    pageEncoding="UTF-8"%>

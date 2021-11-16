@@ -11,7 +11,7 @@
    </style>
    
    <script type="text/javascript">
-     setTimeout("location.href='testList.jsp'", 7000);
+     setTimeout("location.href='bbsWrite.jsp'", 3000);
    </script>
 </head>
 <body>

@@ -34,7 +34,7 @@
      PST.setInt(3,inum);
      PST.executeQuery();
      
-     response.sendRedirect("bbsDetail.jsp?idx="+isabun);
+     response.sendRedirect("bbsDetail.bit?idx="+isabun);
  }catch(Exception ex){System.out.println("bbsreply_edit.jsp 댓글수정에러:" + ex.toString());}
 %>	
 

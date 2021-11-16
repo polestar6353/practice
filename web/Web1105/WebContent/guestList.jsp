@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"    pageEncoding="UTF-8"%>
-<%@ page import="net.bitcamp.guest.GuestDTO" %>
-<%@ page import="java.util.ArrayList" %>
+<%@ taglib prefix="c"    uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -15,50 +15,35 @@
 </head>
 
 <body>
-<h2>guestList.jsp전체출력</h2>	
-
-<jsp:useBean id="mydao" class="net.bitcamp.guest.GuestDAO"/>
-
-
-<% int Gtotal = mydao.dbCountAll();%>
+<h2>guestList.jsp전체출력</h2>
 
 <table border="1" width="900" cellspacing="0" cellpadding="5px">
 <tr>
    <td colspan=4 align="right">
-        <a href="login.jsp">[로그인]</a>
+        <a href="guestList">[guestList서블릿]</a>
         <a href="guestWrite.jsp">[방명록등록]</a>
-   		총레코드갯수: <%= Gtotal %> &nbsp; &nbsp;
+   		총레코드갯수: ${Gtotal} &nbsp; &nbsp;
    </td>
 </tr>
 <tr bgcolor="yellow">
 	<td>code</td> <td>제목</td>  <td>급여</td>  <td>메일주소</td>  
 </tr>	
-<%
-   ArrayList<GuestDTO> LG = mydao.dbSelectAll();
-   /*for(int i=0 ; i<LG.size(); i++) {
-	   GuestDTO dto = (GuestDTO)LG.get(i); 
-	   int Gcode = dto.getCode();
-	   String Gtitle = dto.getTitle();*/
-	   
-  for(GuestDTO dto : LG){
-	 int Gcode = dto.getCode();
-	 String Gtitle = dto.getTitle();  	   
-%>    	
-  <tr>
-    <td> <%= Gcode %> </td>
-    <td> <a href="guestDetail.jsp?idx=<%=Gcode%>"> <%= Gtitle %> </a> </td>
-    <td> <%= dto.getPay() %> </td>
-    <td> <%= dto.getEmail() %> </td>
-  </tr>  
-<%  
-   }//for end 
-%>	
+
+<c:catch>
+ <c:forEach var="bean" items="${LG}">   	
+	<tr>
+	   <td> ${bean.code} </td>
+	   <td> <a href="gDetail.camp?idx=${bean.code}"> ${bean.title} </a> </td>
+	   <td> ${bean.pay} </td>
+	   <td> ${bean.email} </td>
+	</tr>
+  </c:forEach>  
+</c:catch>
 </table>
 		
 	<p>
-	<a href="gugudan.jsp">[gugudan]</a>
 	<a href="guestWrite.jsp">[방명록등록]</a>
-	<a href="guestList.jsp">[전체출력]</a>
+	<a href="guestList">[guestList서블릿]</a>
 </body>
 </html>
 

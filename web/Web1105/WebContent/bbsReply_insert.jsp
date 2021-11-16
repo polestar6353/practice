@@ -31,7 +31,7 @@ int isabun = Integer.parseInt(request.getParameter("sabun"));
    PST.setString(2,icontent);
    PST.setInt(3, isabun);
    PST.executeQuery();
-   response.sendRedirect("bbsDetail.jsp?idx="+isabun);
+   response.sendRedirect("bbsDetail.bit?idx="+isabun);
    
    //response.sendRedirect("bbsReply.jsp?Ridx=");
  }catch(Exception ex){System.out.println("bbsreply_insert.jsp 댓글등록에러:" + ex.toString());}

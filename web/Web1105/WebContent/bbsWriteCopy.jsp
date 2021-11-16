@@ -18,20 +18,18 @@
 </head>
 <body>
 <h2> bbsWrite.jsp </h2>
-  <form name="myform"  action="bbsInsert.bit"    >
-      사번: <input type="text" name="sabun" >  <br>
-      이름: <input type="text" name="name"  value="choi">  <br>
-      제목: <input type="text" name="title"  value="kakao">  <br>
-      급여: <input type="text" name="pay"  value="41">   <br>
-      메일: <input type="text" name="email"  value="sk@dam.kr">  <br>
-       	   <input type="submit" value="bbs서블릿저장" > &nbsp;
-       	   <input type="reset" value="취소">  
+  <form name="myform"  action="bbsSave.jsp"    >
+      제목:  <input type="text"  >  <br>
+      급여:  <input type="text" >  <br>
+
+       <input type="submit" value="bbd저장" > &nbsp;
+       <input type="reset" value="취소">  
   </form>
   
 
 <p>
 <a href="bbsWrite.jsp">[bbs등록]</a>
-<a href="bbsSelect.bit">[bbs전체출력]</a>
-<a href="index.jsp">[index]</a>
+<a href="bbsList.jsp?pageNum=1">[bbs전체출력]</a>
+<a href="testList.jsp">[testList]</a>
 </body>
 </html>
