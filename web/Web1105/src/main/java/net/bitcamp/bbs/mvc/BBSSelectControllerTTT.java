@@ -13,11 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.bitcamp.bbs.BBSDAO;
+import net.bitcamp.bbs.BBSDAOTTT;
 import net.bitcamp.bbs.BBSDTO;
 
 
 @WebServlet("/bbsSelect.bit")
-public class BBSSelectController extends HttpServlet {  
+public class BBSSelectControllerTTT extends HttpServlet {  
 	private static final long serialVersionUID = 1L;
        
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -57,7 +58,7 @@ public class BBSSelectController extends HttpServlet {
 		startRow = ((pageNUM-1)*10) + 1 ; //241
 		endRow = pageNUM*10; //250
 		
-		BBSDAO dao = new BBSDAO();
+		BBSDAOTTT dao = new BBSDAOTTT();
 		BBSDTO dto = new BBSDTO();
 
 		int GGtotal = dao.dbCountAll(); //전체데이터갯수

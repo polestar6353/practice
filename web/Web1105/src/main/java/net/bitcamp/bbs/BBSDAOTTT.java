@@ -6,9 +6,9 @@ import net.bitcamp.common.DB;
 
 //순수자바는 데이터베이스처리=모델링=modeling=M, 웹관련기술금지
 //순수자바는 단독실행금지 
-public class BBSDAO  extends Global {
+public class BBSDAOTTT  extends Global {
 
- public BBSDAO() {
+ public BBSDAOTTT() {
    CN=DB.getConnection(); //반드시 필수구문
  }//end
 

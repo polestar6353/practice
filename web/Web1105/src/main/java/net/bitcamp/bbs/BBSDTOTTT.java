@@ -1,6 +1,6 @@
 package net.bitcamp.bbs;
 
-public class BBSDTO {
+public class BBSDTOTTT {
    private int  rn,sabun, pay, hit; //rnÇà¹øÈ£
    private String name,title,email;
    private java.util.Date  wdate;
