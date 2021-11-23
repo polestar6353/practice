@@ -4,6 +4,7 @@ import org.springframework.web.multipart.MultipartFile; //새로추가
 
 public class BoardDTO {
   private int sabun;
+  private int code; //11-23 화요일 추가//
   private String name;
   private String title;
   private String content;
@@ -18,6 +19,9 @@ public class BoardDTO {
   private  String hobby; //추가
   private  String img_file_name ; //추가
   private  MultipartFile upload_f ;  //추가 <input type=file name=uplaod_f
+  
+  //hobby_seq.nextVal, #{name}, #{title}, #{content}, #{gender}, #{hobby}, #{img_file_name}    guest.xml에 있는게 DTO에 있는지 확인용.
+  //#{code},  #{title},  #{pay},  #{email}
 	
 	 public int getHobby_idx() { return hobby_idx;	}
 	 public void setHobby_idx(int hobby_idx) {this.hobby_idx = hobby_idx;}
@@ -51,5 +55,7 @@ public class BoardDTO {
    public void setContent(String content) {this.content = content;}
    public String getGender() {	return gender;	}
    public void setGender(String gender) {	this.gender = gender;}
+   public int getCode() {return code;}
+	public void setCode(int code) {this.code = code;}
 
 }//class END

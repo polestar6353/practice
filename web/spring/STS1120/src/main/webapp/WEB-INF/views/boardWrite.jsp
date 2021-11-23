@@ -20,8 +20,8 @@
       제목: <input type="text" name="title" value="bbb"> <br>
       내용: <textarea rows="3" cols="20"  name="content">ccc</textarea> <br>
       성별:
-      <input type="radio" name="gender" value="man">남자 
-      <input type="radio" name="gender" value="woman" checked>여자 <br>
+      <input type="radio" name="gender" value="man" checked>남자 
+      <input type="radio" name="gender" value="woman" >여자 <br>
       취미:
       <input type="checkbox" name="hobby" value="game">게임
       <input type="checkbox" name="hobby" value="study">공부

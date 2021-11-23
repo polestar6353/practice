@@ -27,6 +27,16 @@
       <td>번호</td> <td>이름</td> 
       <td>제목</td> <td>성별</td> <td>취미</td>  <td>이미지</td> 
      </tr>  
+     <c:forEach var="dto" items="${LG}">
+     	<tr>
+     		<td>${dto.rn}</td>
+     		<td>${dto.name}</td>
+     		<td>${dto.title}</td>
+     		<td>${dto.gender}</td>
+     		<td>${dto.hobby}</td>
+     		<td> <img src="${pageContext.request.contextPath}/resources/upload/${dto.img_file_name}" width=200 height=50 border=0> </td>
+     	</tr>
+     </c:forEach>
 </table>
 
  <p>

@@ -18,7 +18,10 @@
 	<!-- 11-19-금요일 파일업로드관련 클래스 명시 -->
     <beans:bean id="multipartResolver" 
                class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
-
+               
+    <!-- 11-23-화요일 dao-context.xml 연결 -->
+    <beans:import resource="classpath:/config/mybatis/dao-context.xml"/>      
+	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />

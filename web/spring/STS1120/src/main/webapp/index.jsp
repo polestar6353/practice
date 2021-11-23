@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <title> [ index.jsp ] </title> 
 	<script type="text/javascript">
-	   setTimeout("location.href='boardWrite.sp'" , 3000); 
+	   setTimeout("location.href='boardList.sp'" , 3000); 
 	</script>
 
 	<style type="text/css">
@@ -17,9 +17,7 @@
    <!-- index.jsp주석  -->
    <p id="pline">	
    <div align="center">
-		<video width="600" autoplay muted loop  controls>
-	  	  <source src="./resources/images/scuba.mp4" type="video/mp4"></source>
-	  	</video>
+	    <img src="./resources/images/hydran.png">
 
 	    <br>
 	  	<font color="green" size=6> 

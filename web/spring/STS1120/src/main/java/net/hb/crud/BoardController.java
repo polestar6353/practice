@@ -1,11 +1,15 @@
 package net.hb.crud;
 
 import java.io.File;
+import java.util.List;
+
 import javax.servlet.ServletContext;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -29,29 +33,22 @@ public class BoardController {
 	}//end
 	
 	@RequestMapping("/boardInsert.sp")
-	public String board_insert(BoardDTO dto) { //한건저장
-		System.out.println("\nBoardController문서 10시12분");
-		System.out.println("BoardController넘어온 이름 = " + dto.getName());
-		System.out.println("BoardController넘어온 제목 = " + dto.getTitle());
-		System.out.println("BoardController넘어온 내용 = " + dto.getContent());
-		System.out.println("BoardController넘어온 취미 = " + dto.getHobby());
-		System.out.println("BoardController넘어온 파일 = " + dto.getUpload_f());
-		
+	public String board_insert(BoardDTO dto) { //jsp에서 데이터를 받을때 request.getParamater("title")
 		String path = application.getRealPath("./resources/upload");
+		
 		String img = dto.getUpload_f().getOriginalFilename();
-	    System.out.println("BoardController넘어온 img = " + img);
-	    
-	    File file = new File(path, img);
+		File file = new File(path, img); //input type="file" name="upload_f"
 		try{ dto.getUpload_f().transferTo(file); }catch(Exception ex){  }  
-		dto.setImg_file_name(img);  //진짜테이블 이미지필드 img_file_name
-		System.out.println("BoardController넘어온 파일 = " + dto.getImg_file_name());
-		dao.dbInsert(dto);
-		return "boardList";
-	}//end
+		dto.setImg_file_name(img); 
+
+		dao.dbInsert(dto); 
+		return "redirect:/boardList.sp"; //WEB-INF/views/boardList.jsp문서대신 바로 밑에 있는 컨트롤 매핑으로 이동.
+   }//end
 	
 	@RequestMapping("/boardList.sp")
-	public String board_select( ) {//전체출력
-		
+	public String board_select(Model model) {//전체출력
+		List<BoardDTO> LG = dao.dbSelect(); 
+		model.addAttribute("LG", LG); //request.setAttribute와 같은역할
 	   return "boardList";
 	}//end
 	
@@ -62,16 +59,27 @@ public class BoardController {
 	
 	
 	///////////////////////////////////////////////////////////////////////
-	@RequestMapping("/boardInsert2.sp")
-	public String board_insert2(BoardDTO dto) { //한건저장
-		System.out.println("\nBoardController board_insert2(BoardDTO)");
-		System.out.println("BoardController넘어온 이름 = " + dto.getName());
-		System.out.println("BoardController넘어온 제목 = " + dto.getTitle());
-		System.out.println("BoardController넘어온 내용 = " + dto.getContent());
-		System.out.println("BoardController넘어온 취미 = " + dto.getHobby());
-		System.out.println("BoardController넘어온 파일 = " + dto.getUpload_f());
-		return "boardList";
-	}//end
+	   @RequestMapping("/boardInsert2.sp")
+	   public String board_insert2(BoardDTO dto) { //복사본
+	      System.out.println("\nBoardController문서 11-23-화요일 1시17분");
+	      System.out.println("BoardController넘어온 이름 = " + dto.getName());
+	      System.out.println("BoardController넘어온 제목 = " + dto.getTitle());
+	      System.out.println("BoardController넘어온 내용 = " + dto.getContent());
+	      System.out.println("BoardController넘어온 취미 = " + dto.getHobby());
+	      System.out.println("BoardController넘어온 파일 = " + dto.getUpload_f());
+	      System.out.println("BoardController넘어온 파일 = " + dto.getImg_file_name());
+	      
+	      String path = application.getRealPath("./resources/upload");
+	      String img = dto.getUpload_f().getOriginalFilename();
+	       System.out.println("BoardController넘어온 img = " + img);
+	       
+	       File file = new File(path, img);
+	      try{ dto.getUpload_f().transferTo(file); }catch(Exception ex){  }  
+	      dto.setImg_file_name(img);  //진짜테이블 이미지필드 img_file_name
+	      System.out.println("BoardController넘어온 파일 = " + dto.getImg_file_name());
+	      //dao.dbInsert(dto);
+	      return "boardList";
+	   }//end
 	
 }//BoardController class END
 
