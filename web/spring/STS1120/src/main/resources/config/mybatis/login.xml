@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="add" parameterType="net.hb.crud.LoginDTO">
 	  insert into guest(userid,pwd)
-	  values( #{userid},  #{pwd}, )
+	  values( #{userid},  #{pwd} )
 	</insert>
 
    	<select id="selectAll" resultType="net.hb.crud.LoginDTO">

@@ -17,15 +17,33 @@ public class BoardDAO {
 	  System.out.println("dao단에서 저장성공");
   }//end
   
+  
   public List<BoardDTO> dbSelect() {
 	  List<BoardDTO> list = temp.selectList("board.selectAll") ;
 	  return list ;
   }//end
   
+  
+  public int dbCountAll() {
+	  int Gtotal = temp.selectOne("board.countAll");
+	  return Gtotal;
+  }
+  
+  
   public BoardDTO dbDetail(int code) {
-	  BoardDTO dto = new BoardDTO();
+	  BoardDTO dto = temp.selectOne("board.detail",code);
 	  return dto;
   }//end
+  
+  public void dbDelete(int code) {
+	  temp.selectOne("board.delete",code);
+  }
+  
+
+  public void dbUpdate(BoardDTO dto) {
+	  temp.update("board.update",dto);	
+  }
+  
   
   public void dbInsert2(BoardDTO dto) { //복사본
 	System.out.println("\nBoardDAO문서 dbInsert2(BoardDTO)");
@@ -35,4 +53,6 @@ public class BoardDAO {
 	System.out.println("dao넘어온 취미 = " + dto.getHobby());
 	System.out.println("dao넘어온 파일 = " + dto.getImg_file_name());
   }//end 
+
+
 }//class END

@@ -19,11 +19,14 @@ public class BoardDTO {
   private  String hobby; //추가
   private  String img_file_name ; //추가
   private  MultipartFile upload_f ;  //추가 <input type=file name=uplaod_f
+  private  String default_f ;
+  
   
   //hobby_seq.nextVal, #{name}, #{title}, #{content}, #{gender}, #{hobby}, #{img_file_name}    guest.xml에 있는게 DTO에 있는지 확인용.
   //#{code},  #{title},  #{pay},  #{email}
 	
-	 public int getHobby_idx() { return hobby_idx;	}
+
+	public int getHobby_idx() { return hobby_idx;	}
 	 public void setHobby_idx(int hobby_idx) {this.hobby_idx = hobby_idx;}
 	 public String getHobby() {return hobby;}
 	 public void setHobby(String hobby) {this.hobby = hobby;}
@@ -33,6 +36,9 @@ public class BoardDTO {
 	 public MultipartFile getUpload_f() {return upload_f;}
 	 public void setUpload_f(MultipartFile upload_f) {this.upload_f = upload_f;	}
 	
+	public String getDefault_f() {return default_f;}
+	public void setDefault_f(String default_f) {this.default_f = default_f;}
+	 
 	public int getSabun() {return sabun;}
 	public void setSabun(int sabun) {this.sabun = sabun;}
 	public java.util.Date getWdate() {return wdate;	}

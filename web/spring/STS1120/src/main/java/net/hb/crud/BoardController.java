@@ -1,9 +1,15 @@
 package net.hb.crud;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +38,7 @@ public class BoardController {
 		return "boardWrite";  //WEB-INF/views/boardWrite.jsp문서 가르켜요 
 	}//end
 	
+	
 	@RequestMapping("/boardInsert.sp")
 	public String board_insert(BoardDTO dto) { //jsp에서 데이터를 받을때 request.getParamater("title")
 		String path = application.getRealPath("./resources/upload");
@@ -45,18 +52,86 @@ public class BoardController {
 		return "redirect:/boardList.sp"; //WEB-INF/views/boardList.jsp문서대신 바로 밑에 있는 컨트롤 매핑으로 이동.
    }//end
 	
+	
 	@RequestMapping("/boardList.sp")
 	public String board_select(Model model) {//전체출력
+		int Gtotal = dao.dbCountAll();
 		List<BoardDTO> LG = dao.dbSelect(); 
 		model.addAttribute("LG", LG); //request.setAttribute와 같은역할
+		model.addAttribute("Gtotal",Gtotal);
 	   return "boardList";
 	}//end
 	
+	
 	@RequestMapping("/boardDetail.sp")
-	public void board_detail( ) { //한건상세
-		
+	public String board_detail(HttpServletRequest request,Model model) { //한건상세
+		int data=Integer.parseInt(request.getParameter("idx"));
+		BoardDTO dto = dao.dbDetail(data);
+		model.addAttribute("dto",dto);
+		return "boardDetail";
 	}//end
 	
+	
+	@RequestMapping("/boardDelete.sp")
+	public void boad_delete(HttpServletRequest request,HttpServletResponse response){
+		int data=Integer.parseInt(request.getParameter("idx"));
+		dao.dbDelete(data);		
+		response.setContentType("text/html;charset=UTF-8");
+		try {
+			PrintWriter out = response.getWriter();
+			out.println("<script>");
+			out.println("alert(\"성공적으로 삭제했습니다\");");
+			out.println("location.href(\"boardList.sp\");");
+			out.println("</script>");
+		}catch (Exception e) {
+			System.out.println("에러사유 : "+e);
+		}
+	}
+	
+	@RequestMapping("/boardEdit.sp")
+	public String board_edit(HttpServletRequest request, Model model) {
+		int data=Integer.parseInt(request.getParameter("idx"));
+		BoardDTO dto = dao.dbDetail(data);
+		model.addAttribute("dto",dto);
+		return "boardEdit";
+	}
+	
+	@RequestMapping("/boardEditSave.sp")
+	public String board_edit(BoardDTO dto) {
+		if(dto.getUpload_f().getOriginalFilename().equals("")) {
+			dto.setImg_file_name(dto.getDefault_f());
+		}else {
+			String path = application.getRealPath("./resources/upload");
+			String img = dto.getUpload_f().getOriginalFilename();
+			File file = new File(path, img); //input type="file" name="upload_f"
+			try{ dto.getUpload_f().transferTo(file); }catch(Exception ex){  }  
+			dto.setImg_file_name(img); 
+		}
+		dao.dbUpdate(dto);
+		return "redirect:/boardList.sp";
+	}
+	
+	@RequestMapping("/download")
+	public String board_download(HttpServletRequest request, HttpServletResponse response) {		
+		int code = Integer.parseInt(request.getParameter("idx"));
+		try {
+			String fname=request.getParameter("fname");			
+			String path = application.getRealPath("./resources/upload");			
+			File file = new File(path, fname);			
+			response.setHeader("Content-Disposition", "attachment;filename="+fname);
+			InputStream is  = new FileInputStream(file);
+			OutputStream os = response.getOutputStream();
+			byte[] bt = new byte[(int)file.length()];
+			is.read(bt, 0, bt.length);
+			os.write(bt);
+			is.close();
+			os.close();
+		}
+		catch (Exception e) {
+			System.out.println("에러이유"+e);
+		}
+		return "redirect:/boardDetail.sp?idx="+code;
+	}
 	
 	///////////////////////////////////////////////////////////////////////
 	   @RequestMapping("/boardInsert2.sp")

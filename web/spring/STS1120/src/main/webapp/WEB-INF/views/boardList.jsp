@@ -20,7 +20,7 @@
     
   <table width=900 border=1   cellspacing="0">
   	 <tr align="right" height=50>
-  	 	<td colspan="6"> 전체레코드갯수: 7 &nbsp;  </td>
+  	 	<td colspan="6"> 전체레코드갯수: ${Gtotal} &nbsp;  </td>
   	 </tr>
   
      <tr bgcolor=yellow height=50>
@@ -31,7 +31,7 @@
      	<tr>
      		<td>${dto.rn}</td>
      		<td>${dto.name}</td>
-     		<td>${dto.title}</td>
+     		<td><a href="boardDetail.sp?idx=${dto.hobby_idx}">${dto.title}</a></td>
      		<td>${dto.gender}</td>
      		<td>${dto.hobby}</td>
      		<td> <img src="${pageContext.request.contextPath}/resources/upload/${dto.img_file_name}" width=200 height=50 border=0> </td>
