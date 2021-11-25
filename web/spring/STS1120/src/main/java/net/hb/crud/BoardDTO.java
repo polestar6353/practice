@@ -63,5 +63,21 @@ public class BoardDTO {
    public void setGender(String gender) {	this.gender = gender;}
    public int getCode() {return code;}
 	public void setCode(int code) {this.code = code;}
+	
+	//11-25-¸ñ¿äÀÏ  ÆäÀÌÂ¡,°Ë»ö,´ñ±Û°¹¼ö
+	private int startRow, endRow ;
+	private String skey, sval ;
+	private int rcnt;
+
+    public int getStartRow() {return startRow;	}
+	public void setStartRow(int startRow) {	this.startRow = startRow;	}
+	public int getEndRow() {return endRow;	}	public void setEndRow(int endRow) {	this.endRow = endRow;}
+
+	public String getSkey() {	return skey;	}
+	public void setSkey(String skey) {	this.skey = skey;	}
+	public String getSval() {	return sval;	}
+	public void setSval(String sval) {	this.sval = sval;	}
+	public int getRcnt() {	return rcnt;	}
+	public void setRcnt(int rcnt) { this.rcnt = rcnt;	}
 
 }//class END

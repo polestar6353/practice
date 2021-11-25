@@ -10,14 +10,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	   values(hobby_seq.nextVal, #{name}, #{title}, #{content}, #{gender}, #{hobby}, #{img_file_name} )    
 	</insert>
 	
-	<select id="selectAll" resultType="net.hb.crud.BoardDTO"> <!-- resultType="bdto" 와 같이 SqlMapConfig.xml에 정의된 Alias명을 사용할 수도 있으나 권장하지 않는다. -->
+	<select id="selectAll" parameterType="net.hb.crud.BoardDTO" resultType="net.hb.crud.BoardDTO"> <!-- resultType="bdto" 와 같이 SqlMapConfig.xml에 정의된 Alias명을 사용할 수도 있으나 권장하지 않는다. -->
 	   										<!-- resultType은 ResultSet과 비슷한 역할을 한다.-->
-	   select rownum rn, h.* from hobby h   
+	   select * from (select rownum rn, h.* from (select * from hobby where ${skey} like '%'||#{sval}||'%') h) where rn between #{startRow} and #{endRow}  
+		<!-- 값은 #{}, 필드는 ${} -->
 	</select>
 	
 	<select id="countAll" resultType="int">
 	   select count(*)  from hobby
 	</select>
+	
+	<select id="countAllSearch" parameterType="net.hb.crud.BoardDTO" resultType="int">
+		select count(*) from hobby where ${skey} like '%'||#{sval}||'%'
+	</select>
+	
 	
 	<select id="detail" parameterType="int" resultType="net.hb.crud.BoardDTO">
 		select * from hobby where hobby_idx = #{data}
@@ -31,8 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="update" parameterType="net.hb.crud.BoardDTO">
 		update hobby set name=#{name}, title=#{title}, content=#{content}, gender=#{gender}, hobby=#{hobby}, img_file_name=#{img_file_name} where hobby_idx=#{hobby_idx}
 	</select>
-	
-	
+
 </mapper>
 
 

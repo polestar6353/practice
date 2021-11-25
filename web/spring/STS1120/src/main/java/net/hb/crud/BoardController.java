@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -54,12 +55,50 @@ public class BoardController {
 	
 	
 	@RequestMapping("/boardList.sp")
-	public String board_select(Model model) {//전체출력
+	public String board_select(Model model, HttpServletRequest request,@RequestParam(value="keyfield", defaultValue="name") String Skey, 
+			@RequestParam(value="keyword",defaultValue="") String Sval, @RequestParam(value="page", defaultValue="1") int pageNum) {//전체출력
+		
+		
+		if(Skey.equals("")||Skey=="") {
+			Skey="name";
+		}
+		
+		int GGtotal = dao.dbCountAllSearch(Skey,Sval);
 		int Gtotal = dao.dbCountAll();
-		List<BoardDTO> LG = dao.dbSelect(); 
+		int pageCount;
+		if(GGtotal%10==0) {
+			pageCount=GGtotal/10;
+		}else {pageCount=GGtotal/10 +1;}
+		
+		int startRow=(pageNum-1)*10+1;
+		int endRow=startRow+9;
+		
+		int startPage=pageNum-(pageNum-1)%10;
+		int endPage=startPage+9;
+		
+		
+		if(endPage>pageCount) {
+			endPage=pageCount;
+		}
+		
+
+		
+		String returnpage = "&keyfield="+Skey+"&keyword="+Sval; 
+
+
+		List<BoardDTO> LG = dao.dbSelect(startRow,endRow,Skey,Sval); 
+
+		
+		
+		model.addAttribute("pageNum",pageNum);
+		model.addAttribute("startPage",startPage);
+		model.addAttribute("endPage",endPage);
+		model.addAttribute("pageCount",pageCount);
 		model.addAttribute("LG", LG); //request.setAttribute와 같은역할
 		model.addAttribute("Gtotal",Gtotal);
-	   return "boardList";
+		model.addAttribute("GGtotal",GGtotal);
+		model.addAttribute("returnpage",returnpage);
+		return "boardList";
 	}//end
 	
 	

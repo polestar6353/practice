@@ -18,15 +18,28 @@ public class BoardDAO {
   }//end
   
   
-  public List<BoardDTO> dbSelect() {
-	  List<BoardDTO> list = temp.selectList("board.selectAll") ;
-	  return list ;
+  public List<BoardDTO> dbSelect(int startRow, int endRow, String Skey, String Sval) {
+	  BoardDTO dto = new BoardDTO();
+	  dto.setStartRow(startRow);
+	  dto.setEndRow(endRow);
+	  dto.setSkey(Skey);
+	  dto.setSval(Sval);
+	  List<BoardDTO> list = temp.selectList("board.selectAll", dto);
+	  return list;
   }//end
   
   
   public int dbCountAll() {
 	  int Gtotal = temp.selectOne("board.countAll");
 	  return Gtotal;
+  }
+  
+  public int dbCountAllSearch(String Skey, String Sval) {
+	  BoardDTO dto = new BoardDTO();
+	  dto.setSkey(Skey);
+	  dto.setSval(Sval);
+	  int GGtotal =temp.selectOne("board.countAllSearch",dto);
+	  return GGtotal;
   }
   
   
