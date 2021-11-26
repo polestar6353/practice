@@ -22,17 +22,13 @@ public class BoardReplyDAO {
 	
 	public List<BoardReplyDTO> dbSelect(int idx) {
 		List <BoardReplyDTO> list;
-		
-		BoardReplyDTO dto = new BoardReplyDTO();
-		dto.setHobby_idx(idx);
-
-		list = temp.selectList("board_reply.select", dto);
+		list = temp.selectList("board_reply.select", idx);
 		
 		return list;
 	}
 	
-	public void dbDelete(BoardReplyDTO dto) {
-		temp.delete("board_reply.del",dto);
+	public void dbDelete(int data) {
+		temp.delete("board_reply.del",data);
 	}
 	
 	public void dbUpdate(BoardReplyDTO dto) {

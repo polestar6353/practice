@@ -25,16 +25,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class BoardReplyController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(BoardReplyController.class);
-	
-	@Autowired
-	ServletContext  application; //파일업로드/다운로드할때 application.getRealPath("폴더")
-	
+
 	@Autowired
 	BoardReplyDAO dao; 
 	
 	
 	@RequestMapping("/reply.sp")
-	public String reply_select(Model model, HttpServletRequest request,@RequestParam(value="hobby_idx") int idx) {
+	public String reply_select(Model model, @RequestParam(value="hobby_idx") int idx) {
 		List <BoardReplyDTO> rLG = dao.dbSelect(idx);
 		model.addAttribute("rLG",rLG);
 
@@ -50,8 +47,7 @@ public class BoardReplyController {
 	
 	@RequestMapping("/boardreply_delete.sp")
 	public String reply_delete(@RequestParam(value="Ridx") int Ridx, @RequestParam(value="idx") int idx, BoardReplyDTO dto) {
-		dto.setRhobby_idx(Ridx);
-		dao.dbDelete(dto);
+		dao.dbDelete(Ridx);
 		return "redirect:/boardDetail.sp?idx="+idx;
 	}
 	

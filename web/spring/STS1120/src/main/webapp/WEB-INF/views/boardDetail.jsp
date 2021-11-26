@@ -25,8 +25,6 @@
 			location.href("boardEdit.sp?idx="+idx);
  		}
  	}
- 	
- 	
  </script>
 
 </head>
