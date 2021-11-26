@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
@@ -6,9 +7,9 @@
 <meta charset="UTF-8">
  <title> boardDetail.jsp </title>
  <style type="text/css">
-   *{font-size:20pt;}
-   a{font-size:20pt; text-decoration:none;  color:green; font-family: Comic Sans MS ; }
-   a:hover{font-size:24pt; text-decoration:underline;  color:green; font-family: Comic Sans MS ; }
+   *{font-size:16pt;}
+   a{font-size:16pt; text-decoration:none;  color:green; font-family: Comic Sans MS ; }
+   a:hover{font-size:20pt; text-decoration:underline;  color:green; font-family: Comic Sans MS ; }
  </style>
  <script>
  	function confirmDelete(idx){
@@ -27,11 +28,12 @@
  	
  	
  </script>
+
 </head>
 <body>
     
-<h2>boardDetail.jsp 한건상세문서출력 </h2>    
-<table border="1" width="900"  cellspacing="0" cellpadding="20px">
+boardDetail.jsp 한건상세문서출력<br>  
+<table border="1" width="900"  cellspacing="0" cellpadding="5px">
  	<tr align="center">
   	   <td colspan="2"> 
   	   	  >>>${dto.name} 님!!!  환영합니다 <<<
@@ -69,6 +71,10 @@
   	</tr>
  </table>
  
+ 
+ <c:import url="/reply.sp?hobby_idx=${dto.hobby_idx }"/>
+
+
 </body>
 </html>
 

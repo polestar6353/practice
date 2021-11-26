@@ -12,6 +12,7 @@
     *{font-size: 16pt; }
     a{text-decoration:none;font-size: 16pt;  color:blue ;}
     a:hover{font-size: 18pt;    text-decoration:underline; color:green ;  }
+    #count_reply{color:red; font-size:12px;}
   </style>
 
 </head>
@@ -37,7 +38,10 @@
        <tr>
         <td> ${dto.rn} </td> 
       	<td> ${dto.name} </td> 
-        <td> <a href="boardDetail.sp?idx=${dto.hobby_idx}"> ${dto.title} </a> </td> 
+        <td> 
+        	<a href="boardDetail.sp?idx=${dto.hobby_idx}"> ${dto.title} </a> 
+        	<c:if test="${dto.rcnt>0}"><span id="count_reply">[${dto.rcnt}]</span></c:if>
+        </td> 
         <td> ${dto.gender}</td> 
         <td> ${dto.hobby}</td>  
         <td align="center"> 

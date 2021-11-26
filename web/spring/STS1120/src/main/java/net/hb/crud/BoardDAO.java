@@ -49,7 +49,7 @@ public class BoardDAO {
   }//end
   
   public void dbDelete(int code) {
-	  temp.selectOne("board.delete",code);
+	  temp.selectOne("board.del",code);
   }
   
 
