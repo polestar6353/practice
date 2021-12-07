@@ -45,5 +45,16 @@ public class BoardService {
 		boardRepository.deleteById(id);
 	}
 	
+	@Transactional
+	public void boardUpdate(int id,Board requestBoard) {
+		Board board = boardRepository.findById(id).
+				orElseThrow(()->{
+			return new IllegalArgumentException("글 찾기 실패:아이디를 찾을 수 없습니다");
+		}); //영속화 완료
+		board.setTitle(requestBoard.getTitle());
+		board.setContent(requestBoard.getContent());
+		//해당 함수 종료시(Service가 종료될 떄)트랜잭션이 종료. 이때 더티체킹
+	}
+	
 }
 

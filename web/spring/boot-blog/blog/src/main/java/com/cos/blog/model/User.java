@@ -31,7 +31,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id; //auto_increment
 	
-	@Column(nullable = false, length = 30, unique=true)
+	@Column(nullable = false, length = 100, unique=true)
 	private String username; //아이디
 	
 	@Column(nullable = false, length = 100)
@@ -46,6 +46,8 @@ public class User {
 	//DB는 RoleType이 없다.
 	@Enumerated(EnumType.STRING)
 	private RoleType role;
+	
+	private String oauth; //kakao, google
 	
 	@CreationTimestamp //시간이 자동입력.
 	private Timestamp createDate;
