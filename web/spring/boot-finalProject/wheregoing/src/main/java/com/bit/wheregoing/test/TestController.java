@@ -1,0 +1,47 @@
+package com.bit.wheregoing.test;
+
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+
+@Controller
+public class TestController {
+	
+	
+	@Autowired
+	TestService testservice;
+	
+	@GetMapping({"","/"})
+	public String index() {
+		
+		return "test/maptest";
+	}
+	
+	
+
+	@RequestMapping("/newmap-result")
+	public String result(Location location,Model model) {
+		String locations=location.getLocations();
+//		System.out.println(locations);
+		
+		String shortest = testservice.shotest(location.getCity(),location.getLocations());
+		
+		String[] locationList = locations.split(",");
+		
+		for(int i=0;i<locationList.length;i++) {
+			System.out.println(locationList[i]);
+		}
+		
+		
+		model.addAttribute("arr",locations);
+		model.addAttribute("arr",shortest);
+		return "test/mapresult";
+	}
+	
+	
+}
