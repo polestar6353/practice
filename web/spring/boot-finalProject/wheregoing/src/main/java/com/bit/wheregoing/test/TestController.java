@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
+
 @Controller
 public class TestController {
 	
@@ -25,20 +26,31 @@ public class TestController {
 	
 
 	@RequestMapping("/newmap-result")
-	public String result(Location location,Model model) {
+	public String result(Location location, Model model,int days,String city) {
+
 		String locations=location.getLocations();
-//		System.out.println(locations);
+		String hotels=location.getHotels();
+		//System.out.println(locations);
+		
+//		System.out.println(hotels);
+//		System.out.println("-------");
+//		System.out.println(days);
+//		System.out.println("-------");
+//		System.out.println(city);
 		
 		String shortest = testservice.shotest(location.getCity(),location.getLocations());
 		
-		String[] locationList = locations.split(",");
+		String wg = testservice.wg(days, location.getCity(), location.getLocations(), location.getHotels());
+
 		
-		for(int i=0;i<locationList.length;i++) {
-			System.out.println(locationList[i]);
-		}
+//		String[] locationList = locations.split(",");
+//		
+//		for(int i=0;i<locationList.length;i++) {
+//			System.out.println(locationList[i]);
+//		}
 		
 		
-		model.addAttribute("arr",locations);
+
 		model.addAttribute("arr",shortest);
 		return "test/mapresult";
 	}

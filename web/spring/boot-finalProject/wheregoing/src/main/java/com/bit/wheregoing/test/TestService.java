@@ -58,10 +58,104 @@ public class TestService {
 				locationList.get(i).setLat(37.553017);
 				locationList.get(i).setLng(126.9376271);
 			};
+			if(locationList.get(i).getLocations().equals("GyeongbokgungP")) {
+			    locationList.get(i).setLat(37.585055084889504);   
+			    locationList.get(i).setLng(126.97659114710879);
+			};
+			    if(locationList.get(i).getLocations().equals("ChangdeokgungP")) {
+			    locationList.get(i).setLat(37.58634363065633);  
+			    locationList.get(i).setLng(126.99181662454347); 
+			};
+			    if(locationList.get(i).getLocations().equals("GyeongdongM")) {
+			    locationList.get(i).setLat(37.58634363065633);  
+			    locationList.get(i).setLng(127.03885184117183); 
+			};
+			    if(locationList.get(i).getLocations().equals("StarfieldC")) {
+			    locationList.get(i).setLat(37.516935759039576);  
+			    locationList.get(i).setLng(127.06082449711501);
+			};
+			    if(locationList.get(i).getLocations().equals("YonseiU")) {
+			    locationList.get(i).setLat(37.57273933928159);  
+			    locationList.get(i).setLng(126.94066153463814); 
+			};
+			    if(locationList.get(i).getLocations().equals("SeoulArtsC")) {
+			    locationList.get(i).setLat(37.48615788106978);  
+			    locationList.get(i).setLng(127.0144759255438); 
+			};
+			    if(locationList.get(i).getLocations().equals("LotteWorld")) {
+			    locationList.get(i).setLat(37.51611881086883);  
+			    locationList.get(i).setLng(127.09756003082893); 
+			};
+			    if(locationList.get(i).getLocations().equals("WarMemorialH")) {
+			    locationList.get(i).setLat(37.54144003511956);  
+			    locationList.get(i).setLng(126.97739706863972); 
+			};
+			    if(locationList.get(i).getLocations().equals("WarandWomen")) {
+			    locationList.get(i).setLat(37.56321485582398);  
+			    locationList.get(i).setLng(126.91525565084426); 
+			};
+			    if(locationList.get(i).getLocations().equals("MangwonM")) {
+			    locationList.get(i).setLat(37.55797587095626);  
+			    locationList.get(i).setLng(126.90581427524369); 
+			};
+			    if(locationList.get(i).getLocations().equals("Cheonggyecheon")) {
+			    locationList.get(i).setLat(37.57049439232437);  
+			    locationList.get(i).setLng(126.97842703697813); 
+			};
+			    if(locationList.get(i).getLocations().equals("Dongdaemun")) {
+			    locationList.get(i).setLat(37.57189986111966);  
+			    locationList.get(i).setLng(127.00942945048725); 
+			};
+			    if(locationList.get(i).getLocations().equals("NamsanT")) {
+			    locationList.get(i).setLat(37.55210095403334);  
+			    locationList.get(i).setLng(126.98840093234205); 
+			};
+			    if(locationList.get(i).getLocations().equals("Gyeonglidangil")) {
+			    locationList.get(i).setLat(37.53954531316697);  
+			    locationList.get(i).setLng(126.98724221827294); 
+			};
+			    if(locationList.get(i).getLocations().equals("MuseumofKorea")) {
+			    locationList.get(i).setLat(37.585055084889504);  
+			    locationList.get(i).setLng(126.97659114710879);
+			};
+			    if(locationList.get(i).getLocations().equals("ApgujeongHyundaiD")) {
+			    locationList.get(i).setLat(37.528927511851386);  
+			    locationList.get(i).setLng(127.0275826412121); 
+			};
+			    if(locationList.get(i).getLocations().equals("LotteWorldT")) {
+			    locationList.get(i).setLat(37.51306405337366);  
+			    locationList.get(i).setLng(127.10191633106517); 
+			};
+			    if(locationList.get(i).getLocations().equals("DreamForest")) {
+			    locationList.get(i).setLat(37.622144056950226);  
+			    locationList.get(i).setLng(127.04072049860147);
+			};
+			    if(locationList.get(i).getLocations().equals("GyeonguiLineF")) {
+			    locationList.get(i).setLat(37.55956021204483);  
+			    locationList.get(i).setLng(126.92546487452844); 
+			};
+			    if(locationList.get(i).getLocations().equals("TrickEyeMuseum")) {
+			    locationList.get(i).setLat(37.553734192808186);  
+			    locationList.get(i).setLng(126.92163874302071);
+			};
+			    if(locationList.get(i).getLocations().equals("Dongmyo")) {
+			    locationList.get(i).setLat(37.573283023567186);  
+			    locationList.get(i).setLng(127.01654927557925);
+			};
+			    if(locationList.get(i).getLocations().equals("HousesofParliament")) {
+			    locationList.get(i).setLat(37.528261036136726);  
+			    locationList.get(i).setLng(126.91772552193481);
+			};
+			    if(locationList.get(i).getLocations().equals("BoramaeP")) {
+			    locationList.get(i).setLat(37.49392707859974);  
+			    locationList.get(i).setLng(126.91879809805897); 
+			};
+			    if(locationList.get(i).getLocations().equals("AsanMedicalCenter")) {
+			    locationList.get(i).setLat(37.527439583874866);  
+			    locationList.get(i).setLng(127.10889139526071); 
+			};
 		}
 		
-		
-		List<Location> tempList = new ArrayList<Location>();
 		
 		//두 점 사이의 거리로 갑시다. 왜냐? 마이로도 산을뚫고 가게하니까.
 		
@@ -69,8 +163,8 @@ public class TestService {
 			double distance=0;
 			for(int j=i+1;j<locationList.size();j++) {
 				double newDistance = twoPointDistance(locationList.get(i).getLat(),locationList.get(i).getLng(), locationList.get(j).getLat(), locationList.get(j).getLng());
-				System.out.println(locationList.get(i).getLocations()+"과"+locationList.get(j).getLocations()+"의비교");
-				System.out.println(newDistance);
+//				System.out.println(locationList.get(i).getLocations()+"과"+locationList.get(j).getLocations()+"의비교");
+//				System.out.println(newDistance);
 				if(distance==0) {
 					distance=newDistance;
 				}
@@ -78,9 +172,7 @@ public class TestService {
 					Collections.swap(locationList, i+1, j);
 					distance = newDistance;
 				}
-			
-			//Collections.swap(tempList, i, j);
-			
+
 			}
 			
 		}
@@ -111,7 +203,82 @@ public class TestService {
 		return distance;
 	}
 	
+	public String wg(int days, String city,String locations,String hotels) {
+		//days->몇일을 받을것인가? test에서는 3일기준으로 해보자.
+		//city->서울고정일것이다.
+		//locations->컴마로 구분된 스트링으로 위치들이 적혀있음
+		//hotels->컴마로 구분된 스트링으로 호텔 위치들이 적혀있음.
+		double distance = standardDistance(city); //일단서울세팅. 실제에선 다르게 받으면 되겠지? 값은 임시적으로 0.05로 잡음.
+		
+		//토탈 일정을 관리할 리스트를 뽑음.
+		List<List> dayslist = new ArrayList<List>();
+		//토탈 일정을 관리할 리스트 안에 일자별 리스트를 넣음.
+		for(int i=0; i<days; i++) {
+			List<Location> innerList = new ArrayList<Location>();
+			dayslist.add(innerList);
+		}
+		
+		//기본 시작 위치인 서울을 세팅. 시작은 서울역이다.
+		Location start = new Location().builder().city(city).locations("SeoulS").build();
+		start.setLat(37.553017);
+		start.setLng(126.9376271);
+		dayslist.get(0).add(start);
+		
+		///////////////////////////////
+		
+		//여행지들의 정보가 담긴 리스트->locationList
+		List<Location> locationList = new ArrayList<Location>();
+		String[] locationSplit = locations.split(",");
+		for(int i=0;i<locationSplit.length;i++) {
+			Location loc = new Location().builder().city(city).locations(locationSplit[i]).build();
+			locationList.add(loc);
+		}
+		//관광지를 이용해서 DB에서 위도경도를 꺼내온다. 일단 임의로 붙인다.
+		for(int i=0;i<locationList.size();i++) {
+			if(locationList.get(i).getLocations().equals("HongikU")) {
+				locationList.get(i).setLat(37.5515814);
+				locationList.get(i).setLng(126.9227864);
+			};
+		};
+		//호텔의 정보가 담긴 리스트->hotelList를 만든다. 똑같이 split을 한 다음에, 조금 다른것이 if문으로 NS일경우 LH로 보내자. 
+		//호텔을 6일까지 받았는데도 그냥 진행해도 된다. 왜냐? 어차피 daysList가 day길이만큼만 있을것이며, 즉 넘치는것은 전부 의미 없이 버리게 할 수 있다. 굿.
+		
+		//호텔을 이용해서 DB에서 위도 경도를 꺼내온다. 일단 임의로 붙인다.
+		
+		
+		
+		
+		///////////////////////////////
+		//선점하기
+		//i=0번에 각 기본 호텔을 보내면 될거 같은데?
+		//사용자 이용 시간을 받아야겠다. 정보를... 그것도 중요하다. ->일단 분배를 먼저 구현한 뒤, 나머지를 전부 1에다 몰아주는걸로 하자.
+		//사용자 시간을 받는것과 심층알고리즘은 그 다음에 진행하면 될 것 같다.
+		
+		for(int i=1;i<dayslist.size();i++) {
+			
+		}
+		
+		
+		
+		String aaa="1";
+		
+		
+		return aaa;
+	}
 	
+	
+	public static double standardDistance(String city) {
+		double distance=0;
+		
+		if(city.equals("seoul")) {
+			
+			distance=0.05;
+			}
+		
+		
+		return distance;
+		
+	}
 	
 	
 }

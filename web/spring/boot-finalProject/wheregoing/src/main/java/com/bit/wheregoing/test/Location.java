@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class Location {
 	private String city;
 	private String locations;
+	private String hotels;
 	
 	private double lat;
 	private double lng;
