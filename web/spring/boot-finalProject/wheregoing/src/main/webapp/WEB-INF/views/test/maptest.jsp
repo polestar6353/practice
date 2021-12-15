@@ -8,7 +8,7 @@
 <html>
 
 <head>
-
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <style>
 .clicked {
 	background-color: red;
@@ -24,85 +24,22 @@
 
 	<div id="googleMap" style="width: 100%; height: 400px;"></div>
 	<form id="locationForm" action="/newmap-result">
-		<label>얼마나 여행하실 예정인가요?</label>  <!-- form에 조건걸기. 선택된 수보다 날짜가 짧으면 submit 대신 alert 뜨게하기. -->
-		  <select name="days" >
-		  	<!--  <option value="0">당일치기</option>  최단거리 함수로 보내버리기. -->
-			<option value="1">1박 2일</option>
-			<option value="2">2박 3일</option>
-			<option value="3">3박 4일</option>
-			<option value="4">4박 5일</option>
-			<option value="5">5박 6일</option>
-			<option value="6">6박 7일</option>
-  		  </select>
+		
+		
+		<label>얼마나 여행하실 예정인가요? ()</label><br>  <!-- form에 조건걸기. 선택된 수보다 날짜가 짧으면 submit 대신 alert 뜨게하기. -->
+		
+		<label>시작 날짜를 골라주세요 :</label>
+		<input type="date" id=startDate onchange="changeStartDate()"></br>
+		<label>종료 날짜를 골라주세요 :</label>
+		<input type="date" id=endDate onchange="changeEndDate()"></br>
+
 		<br/>
 		<br/>
-		<!-- 나중에 자바스크립트로 반복문 html넣는다. 혹은 다른방법으로...  -->
-		<label>1박째 숙소를 정해주세요</label>
-		  <select id="firsthotel" onchange="changeHotelArray()" >
-		  	<option value="NO">숙소를 선택해주세요</option>
-			<option value="LH">롯데호텔월드(잠실)</option>
-			<option value="SH">신라호텔(동대입구)</option>
-			<option value="FH">페어몬트앰배서더(여의도)</option>
-			<option value="IH">인터컨티넨탈 서울 코엑스</option>
-			<option value="HH">홀리데이인익스프레스서울홍대</option>
-			<option value="NS">서울역8번출구</option>
-  		  </select>
-  		  <br/>
-		<label>2박째 숙소를 정해주세요</label>
-		  <select id="secondhotel" onchange="changeHotelArray()" >
-		  	<option value="NO">숙소를 선택해주세요</option>
-			<option value="LH">롯데호텔월드(잠실)</option>
-			<option value="SH">신라호텔(동대입구)</option>
-			<option value="FH">페어몬트앰배서더(여의도)</option>
-			<option value="IH">인터컨티넨탈 서울 코엑스</option>
-			<option value="HH">홀리데이인익스프레스서울홍대</option>
-			<option value="NS">서울역8번출구</option>
-  		  </select>
-  		  <br/>
-		<label>3박째 숙소를 정해주세요</label>
-		  <select id="thirdhotel" onchange="changeHotelArray()" >
-			<option value="NO">숙소를 선택해주세요</option>
-			<option value="LH">롯데호텔월드(잠실)</option>
-			<option value="SH">신라호텔(동대입구)</option>
-			<option value="FH">페어몬트앰배서더(여의도)</option>
-			<option value="IH">인터컨티넨탈 서울 코엑스</option>
-			<option value="HH">홀리데이인익스프레스서울홍대</option>
-			<option value="NS">서울역8번출구</option>
-  		  </select>
-  		  <br/>
-		<label>4박째 숙소를 정해주세요</label>
-		  <select id="fourthhotel" onchange="changeHotelArray()" >
-		  	<option value="NO">숙소를 선택해주세요</option>
-			<option value="LH">롯데호텔월드(잠실)</option>
-			<option value="SH">신라호텔(동대입구)</option>
-			<option value="FH">페어몬트앰배서더(여의도)</option>
-			<option value="IH">인터컨티넨탈 서울 코엑스</option>
-			<option value="HH">홀리데이인익스프레스서울홍대</option>
-			<option value="NS">서울역8번출구</option>
-  		  </select>
-  		  <br/>
-		<label>5박째 숙소를 정해주세요</label>
-		  <select id="fifthhotel" onchange="changeHotelArray()" >
-			<option value="NO">숙소를 선택해주세요</option>
-			<option value="LH">롯데호텔월드(잠실)</option>
-			<option value="SH">신라호텔(동대입구)</option>
-			<option value="FH">페어몬트앰배서더(여의도)</option>
-			<option value="IH">인터컨티넨탈 서울 코엑스</option>
-			<option value="HH">홀리데이인익스프레스서울홍대</option>
-			<option value="NS">서울역8번출구</option>
-  		  </select>
-  		  <br/>
-		<label>6박째 숙소를 정해주세요</label>
-		  <select id="sixthhotel" onchange="changeHotelArray()" >
-			<option value="NO">숙소를 선택해주세요</option>
-			<option value="LH">롯데호텔월드(잠실)</option>
-			<option value="SH">신라호텔(동대입구)</option>
-			<option value="FH">페어몬트앰배서더(여의도)</option>
-			<option value="IH">인터컨티넨탈 서울 코엑스</option>
-			<option value="HH">홀리데이인익스프레스서울홍대</option>
-			<option value="NS">서울역8번출구</option>
-  		  </select>
-		<br/>
+		
+		<div id="Hotels"></div>
+		<a href="#" onclick='test()'>테스트함수</a>
+		
+		
 		
 		
 		<br>
@@ -140,15 +77,14 @@
 		<br>
 		<label id="selected"></label> 
 		<input type='hidden' id='selectedValue' name=locations /> 
-		<input type='hidden' id='selectedHotel' name=hotels value='1234'/>
+		<input type='hidden' id='selectedHotel' name=hotels />
 		<input type='hidden' name=city value='seoul'/> 
-		
+		<input type='hidden' id='days', name='days'/>
 		<input id="sss"> <br>
 		<input id="hhh"> <br>
 		<button id="btn-start">시작</button>
 	</form>
 	<br>
-
 
 	<script>
   	let map;
@@ -187,32 +123,134 @@
     let $selectedValue = document.querySelector('#selectedValue');
     const $sss = document.querySelector('#sss');
     const $hhh = document.querySelector('#hhh');
-    
-    const $firsthotel=document.querySelector('#firsthotel');
-    const $secondhotel=document.querySelector('#secondhotel');
-    const $thirdhotel=document.querySelector('#thirdhotel');
-    const $fourthhotel=document.querySelector('#fourthhotel');
-    const $fifthhotel=document.querySelector('#fifthhotel');
-	const $sixthhotel=document.querySelector('#sixthhotel');
 	const $selectedHotel=document.querySelector('#selectedHotel');
 	
-	let hotelArray=[];
 	
-	function changeHotelArray(){
-		hotelArray = [$firsthotel.value,$secondhotel.value,$thirdhotel.value,$fourthhotel.value,$fifthhotel.value,$sixthhotel.value];
-		$hhh.value=hotelArray;
-		$selectedHotel.value=hotelArray;
-	}
+	
+	const $startDate = document.querySelector('#startDate');
+	const $endDate = document.querySelector('#endDate');
+	const $days = document.querySelector('#days');
+	let today= new Date();
+	//시작날짜는 다음날부터 받을래.
+	$startDate.value=today.getFullYear()+"-"+("0"+(today.getMonth()+1)).slice(-2)+"-"+("0"+(today.getDate()+1)).slice(-2);
+	$startDate.min=today.getFullYear()+"-"+("0"+(today.getMonth()+1)).slice(-2)+"-"+("0"+(today.getDate()+1)).slice(-2);
+	$endDate.value=today.getFullYear()+"-"+("0"+(today.getMonth()+1)).slice(-2)+"-"+("0"+(today.getDate()+2)).slice(-2);
+	$endDate.min=today.getFullYear()+"-"+("0"+(today.getMonth()+1)).slice(-2)+"-"+("0"+(today.getDate()+2)).slice(-2);
+	$endDate.max=today.getFullYear()+"-"+("0"+(today.getMonth()+1)).slice(-2)+"-"+("0"+(today.getDate()+7)).slice(-2);
+	
+	//테스트버튼을 누르면 작동.
+	function test(){
+		console.log($endDate.value);
+	};
+	
+	function changeStartDate(){
+		let newDate = new Date($startDate.value);
+		newDate.setDate(newDate.getDate()+1);
+		$endDate.value=newDate.getFullYear()+"-"+("0"+(newDate.getMonth()+1)).slice(-2)+"-"+("0"+(newDate.getDate())).slice(-2);
+		$endDate.min=newDate.getFullYear()+"-"+("0"+(newDate.getMonth()+1)).slice(-2)+"-"+("0"+(newDate.getDate())).slice(-2);
+		
+		newDate.setDate(newDate.getDate()+5);
+		$endDate.max=newDate.getFullYear()+"-"+("0"+(newDate.getMonth()+1)).slice(-2)+"-"+("0"+(newDate.getDate())).slice(-2);
+		
+		changeEndDate();
+	};
+	function changeEndDate(){
+		let diffDays=(new Date($endDate.value)-new Date($startDate.value))/(1000*3600*24); //ms->sec에 1000 sec->hour에 3600 hour->day에 24 
+		createho(diffDays);
+		$days.value = diffDays;
+		
+	};
+	
 
+	
+	//호텔 물어볼 div들이 저장될 리스트
+	let divList=[];
+	//호텔 선택된 값이 들어갈 리스트
+	let hotelList=[];
+	function createHotoel(number){
+		let hotelTemplate =`
+			<label>\${number+1}일차 숙소를 정해주세요</label>
+			  <select id='Hotels\${number}' onchange='changeHotelList(\${number}); test()' >
+				<option value='NO'>숙소를 선택해주세요</option>
+				<option value='LH'>롯데호텔월드(잠실)</option>
+				<option value='SH'>신라호텔(동대입구)</option>
+				<option value='FH'>페어몬트앰배서더(여의도)</option>
+				<option value='IH'>인터컨티넨탈 서울 코엑스</option>
+				<option value='HH'>홀리데이인익스프레스서울홍대</option>
+				<option value='NS'>서울역8번출구</option>
+	  		  </select>
+	  		  <br/>
+	  		<label>\${number+1}일차 일정 시작 시간을 입력해주세요</label>
+	  		<input type="time" id='startTime\${number}' onchange='changeStartTime(\${number})' value="10:00"/>
+	  		<label>\${number+1}일차 일정 종료 시간을 입력해주세요</label>
+	  		<input type="time" id='endTime\${number}' onchange='changeEndTime(\${number})' value="22:00"/>
+	  		  <br/>
+		`;
+		let div = document.createElement('div');
+		div.innerHTML=hotelTemplate;
+		document.querySelector('#Hotels').appendChild(div);
+		divList.push(div);
+		hotelList.push()
+	};
+	
+	//호텔 선택이 바뀔때마다 적용될 함수
+	function changeHotelList(number) {
+		hotelList[number]=document.querySelector(`#Hotels\${number}`).value;
+		$hhh.value=hotelList;
+		$selectedHotel.value=hotelList;
+		
+	};
+	
+	function createho(number){
+		//기존 divList를 통해 입력되어있던 날짜고르는것들을 지운다.
+		for(let i=0;i<divList.length;i++){
+			divList[i].parentNode.removeChild(divList[i]);
+		}
+		//인덱스가 넘어갈 수 있으므로 초기화
+		divList=[];
+		
+		//호텔리스트도 초기화
+		hotelList=[];
+		
+		
+		for(let i=0;i<number;i++){
+			createHotoel(i);
+			hotelList.push('NO');	//초기화된 호텔리스트에 날짜 수만큼 안골랐음 을 넣는다!
+	}};
+	
+	function changeStartTime(number){
+//		let $startTime=document.querySelector(`#startTime\${number}`);
+//		let $endTime=document.querySelector(`#endTime\${number}`);
+		changeEndTime(number);
+	};
+
+	function changeEndTime(number){
+		let $startTime=document.querySelector(`#startTime\${number}`);
+		let $endTime=document.querySelector(`#endTime\${number}`);
+		if($startTime.value>$endTime.value){
+			alert('종료 시간이 시작 시간보다 적을 수 없습니다!');
+			$startTime.value="09:00:00";
+			$endTime.value="22:00:00";	
+			return
+		}
+		if((new Date("1970-01-01 "+$endTime.value)-new Date("1970-01-01 "+$startTime.value))/(3600*1000)>2){
+			alert((new Date("1970-01-01 "+$endTime.value)-new Date("1970-01-01 "+$startTime.value))/3600/1000)
+			$startTime.value="09:00:00";
+			$endTime.value="22:00:00";	
+		}
+		
+	}
+    
+	//리스트들~
+	
     let locationArray=[$HongikU,$SeoulU,$Bitcamp,$YongsanS,$NowonS,$UijeongbuS,$GyeongbokgungP,$ChangdeokgungP,$GyeongdongM,$StarfieldC,$YonseiU,$SeoulArtsC,$LotteWorld,$WarMemorialH,$WarandWomen,$MangwonM,$Cheonggyecheon,$Dongdaemun,$NamsanT,$Gyeonglidangil,$MuseumofKorea,$ApgujeongHyundaiD,$LotteWorldT,$DreamForest,$GyeonguiLineF,$TrickEyeMuseum,$Dongmyo,$HousesofParliament,$BoramaeP,$AsanMedicalCenter];
     let selectedLocationArray = [];
 	
     
-	$hhh.value=hotelArray;
+//	$hhh.value=hotelArray;
 	
-	
-	
-	
+		
+	//버튼 클릭이벤트 함수
     function locationSetting() {
       if (!selectedLocationArray.includes(event.target.id)) {
         selectedLocationArray.push(event.target.id);
@@ -244,7 +282,7 @@
       
 
 
-
+		//이벤트를 달아준다. 굳이 여기 안에 없어도 되는데 왜?. 그냥. 아닌가? 있어야하나? 찾기귀찮다.
 		for(let i=0;i<locationArray.length;i++){
 			locationArray[i].addEventListener('click', (event) => {
 		    	event.preventDefault();
@@ -330,7 +368,7 @@
 
     
     
-
+	changeStartDate();
 
 
   </script>

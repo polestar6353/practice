@@ -2,6 +2,8 @@ package com.bit.wheregoing.test;
 
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,19 +40,19 @@ public class TestController {
 //		System.out.println("-------");
 //		System.out.println(city);
 		
-		String shortest = testservice.shotest(location.getCity(),location.getLocations());
+		String shortest = testservice.shortest(location.getCity(),location.getLocations());
 		
-		String wg = testservice.wg(days, location.getCity(), location.getLocations(), location.getHotels());
-
+		List<String> dayslist = testservice.wg(days, location.getCity(), location.getLocations(), location.getHotels());
 		
-//		String[] locationList = locations.split(",");
-//		
-//		for(int i=0;i<locationList.length;i++) {
-//			System.out.println(locationList[i]);
-//		}
+		for(int i=0;i<dayslist.size();i++) {
+			System.out.println(i+"박차 리스트");
+			System.out.println(dayslist.get(i));
+		}
+		
+		dayslist.set(0, testservice.shortest("seoul",dayslist.get(0)));
 		
 		
-
+		model.addAttribute("dayPlan",dayslist);
 		model.addAttribute("arr",shortest);
 		return "test/mapresult";
 	}

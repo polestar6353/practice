@@ -13,7 +13,6 @@
   <div id="googleMap" style="width:100%;height:400px;"></div>
   <form id="locationForm">
 
-    <label id='return'>넘어온값: "${arr}"</label>
   </form>
 
   <script>
@@ -60,63 +59,104 @@
       let HousesofParliament = {position : { lat: 37.528261036136726,  lng : 126.91772552193481} , label: '국회의사당' ,content:'테스트용',locationSelected : false};
       let BoramaeP = {position : { lat: 37.49392707859974,  lng : 126.91879809805897} , label: '보라매공원' ,content:'테스트용',locationSelected : false};
       let AsanMedicalCenter = {position : { lat: 37.527439583874866,  lng : 127.10889139526071} , label: '서울아산병원 ' ,content:'테스트용',locationSelected : false};
+      let LH = {position : { lat: 37.52069065226224   ,lng : 127.09751421852974} , label: '롯데호텔월드(잠실)',content:'테스트용',locationSelected : false};
+      let SH = {position : { lat: 37.55829809520702   ,lng : 127.00946954497128} , label: '신라호텔(동대입구)',content:'테스트용',locationSelected : false};
+      let FH = {position : { lat: 37.52774053938984   ,lng : 126.93555005608506} , label: '페어몬트앰배서더(여의도)',content:'테스트용',locationSelected : false};
+      let IH = {position : { lat: 37.51352707438062   ,lng : 127.05739992550794} , label: '인터컨티넨탈 서울 코엑스',content:'테스트용',locationSelected : false};
+      let HH = {position : { lat: 37.56578757493458   ,lng : 126.92828971495234} , label: '홀리데이인익스프레스서울홍대',content:'테스트용',locationSelected : false};
+      let NS = {position : { lat: 37.55610380930567   ,lng : 126.97345003934156} , label: '서울역8번출구',content:'테스트용',locationSelected : false};
       
-	  let locations = [${arr}];
+      
 
-	  let myTrip=[];
-      for(let i=0;i<locations.length;i++){
-    	  myTrip.push(locations[i].position);
-      }
-      console.log(myTrip);
-     
+	  //List<String으로 받아온 값들.> 
+	  
+//	  let locations = ${dayPlan}; 원래 마커는 한번에 리스트에 넣고 띄우려고 했었음. 수정함.
+
+	  let daysList = []
+	  <c:forEach var="list" items="${dayPlan }">
+	  	daysList.push([${list}]);  //만일 "${list}"로 받아버릴 경우, 문자열이 된다. 이를 split(',') 해서 문자로 사용이 가능하다.
+	  </c:forEach>
+//	  console.log(daysList[1][0]);
+//	  //사용설명->daysList[i] 는 i일차 일정정보를 다 담고있다. daysList[i][j]는 i일차의 j번째 일정이 된다.
+
       
       //첫번째이동위치로 화면포커스주기
-      map.setCenter(locations[0].position);
+      map.setCenter(daysList[0][0].position); //1일차 첫일정으로 보내버린다.
 	  
       //선긋기
-      for(let i=0;i<myTrip.length-1;i++){      
-          let flightPath = new google.maps.Polyline({
-            path:[myTrip[i],myTrip[i+1]],
-            strokeColor:"#0000FF",
-            strokeOpacity:0.8,
-            //strokeWeight:2
-            //화살표
-            icons: [
-                {
-                  icon: {
-                	    path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
-                  },
-                  offset: "85%",
-                },
-              ],
-          });
-          flightPath.setMap(map);
+      for(let i=0;i<daysList.length;i++){
     	  
+    	  //선 색깔. 나중에 switch문으로 바꾸거나 다른 방법으로 바꾸자.
+    	  let color;
+    	  if(i==0){
+    		  color="#0000FF";
+    	  }
+    	  if(i==1){
+    		  color="#FF0000";
+    	  }
+    	  if(i==2){
+    		  color="#00FF00";
+    	  }
+    	  if(i==3){
+    		  color="#000000";
+    	  }
+    	  if(i==4){
+    		  color="#FFFFFF"
+    	  }
+    	  if(i==5){
+    		  color="#FF00FF";
+    	  }
+    	  if(i==6){
+    		  color="#00FFFF";
+    	  }
+    	  
+    	  
+	      for(let j=0;j<daysList[i].length-1;j++){      
+	          let flightPath = new google.maps.Polyline({
+	            path:[daysList[i][j].position,daysList[i][j+1].position],
+	            strokeColor:color,
+	            strokeOpacity:0.8,
+	            //strokeWeight:2
+	            //화살표
+	            icons: [
+	                {
+	                  icon: {
+	                	    path: google.maps.SymbolPath.FORWARD_OPEN_ARROW,
+	                  },
+	                  offset: "85%",
+	                },
+	              ],
+	          });
+	          flightPath.setMap(map);	  
+	      }
       }
       
 
 
-	  //마커달기
+	  //마커달기. 중복마커를 해결해야 한다. 관광지의 경우 중복이 나올 가능성은 거의 없다고 보고 있지만, 호텔의 경우 중복이 나올 가능성이 높다
 	  
 	  const iconImage='/image/marker.PNG'
 	  
-      for (let i = 0; i < locations.length; i++) {
-         let mker = new google.maps.Marker({
-            position: locations[i].position,
-            label: locations[i].label,
-            icon: iconImage,
-        	map,
-            }); 
+      for (let i = 0; i < daysList.length; i++) {
+    	  for(let j = 0; j<daysList[i].length; j++){
+	         let mker = new google.maps.Marker({
+	            position: daysList[i][j].position,
+	            label: daysList[i][j].label,
+	            icon: iconImage,
+	        	map,
+	            }); 
+      		}
       }
+	  
 	  
     }
 
   </script>
 
   <script
-    src="https://maps.googleapis.com/maps/api/js?key=InsertYourKey&callback=myMap"></script>
+    src="https://maps.googleapis.com/maps/api/js?key=InsertyourKey&callback=myMap"></script>
 
-  <!-- 일단 발급받은 api키. -->
+  <!--  일단 발급받은 api키. -->
 
 </body>
 
