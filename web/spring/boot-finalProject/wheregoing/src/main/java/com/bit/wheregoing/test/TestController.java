@@ -28,7 +28,7 @@ public class TestController {
 	
 
 	@RequestMapping("/newmap-result")
-	public String result(Location location, Model model,int days,String city) {
+	public String result(Location location, Model model,int days,String city,String timeList) {
 
 		String locations=location.getLocations();
 		String hotels=location.getHotels();
@@ -39,21 +39,23 @@ public class TestController {
 //		System.out.println(days);
 //		System.out.println("-------");
 //		System.out.println(city);
+		System.out.println(timeList);
+
+		
 		
 		String shortest = testservice.shortest(location.getCity(),location.getLocations());
 		
 		List<String> dayslist = testservice.wg(days, location.getCity(), location.getLocations(), location.getHotels());
 		
-		for(int i=0;i<dayslist.size();i++) {
-			System.out.println(i+"박차 리스트");
-			System.out.println(dayslist.get(i));
-		}
+//		for(int i=0;i<dayslist.size();i++) {
+//			System.out.println(i+"박차 리스트");
+//			System.out.println(dayslist.get(i));
+//		}
 		
-		dayslist.set(0, testservice.shortest("seoul",dayslist.get(0)));
+		//dayslist.set(0, testservice.shortest("seoul",dayslist.get(0)));
 		
 		
 		model.addAttribute("dayPlan",dayslist);
-		model.addAttribute("arr",shortest);
 		return "test/mapresult";
 	}
 	

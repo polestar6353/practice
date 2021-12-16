@@ -26,7 +26,7 @@
 	<form id="locationForm" action="/newmap-result">
 		
 		
-		<label>얼마나 여행하실 예정인가요? ()</label><br>  <!-- form에 조건걸기. 선택된 수보다 날짜가 짧으면 submit 대신 alert 뜨게하기. -->
+		<label>얼마나 여행하실 예정인가요? </label><br>
 		
 		<label>시작 날짜를 골라주세요 :</label>
 		<input type="date" id=startDate onchange="changeStartDate()"></br>
@@ -79,9 +79,11 @@
 		<input type='hidden' id='selectedValue' name=locations /> 
 		<input type='hidden' id='selectedHotel' name=hotels />
 		<input type='hidden' name=city value='seoul'/> 
-		<input type='hidden' id='days', name='days'/>
+		<input type='hidden' id='days' name='days'/>
+		<input type='hidden' id='timeList' name='timeList'/>
 		<input id="sss"> <br>
 		<input id="hhh"> <br>
+		<input id="ttt"> <br>
 		<button id="btn-start">시작</button>
 	</form>
 	<br>
@@ -124,7 +126,8 @@
     const $sss = document.querySelector('#sss');
     const $hhh = document.querySelector('#hhh');
 	const $selectedHotel=document.querySelector('#selectedHotel');
-	
+	const $ttt = document.querySelector('#ttt');
+	const $timeList=document.querySelector('#timeList');
 	
 	
 	const $startDate = document.querySelector('#startDate');
@@ -140,7 +143,7 @@
 	
 	//테스트버튼을 누르면 작동.
 	function test(){
-		console.log($endDate.value);
+		console.log($timeList.value);
 	};
 	
 	function changeStartDate(){
@@ -167,6 +170,8 @@
 	let divList=[];
 	//호텔 선택된 값이 들어갈 리스트
 	let hotelList=[];
+	//일정 시간들이 들어갈 리스트.
+	let timeList=[];
 	function createHotoel(number){
 		let hotelTemplate =`
 			<label>\${number+1}일차 숙소를 정해주세요</label>
@@ -209,14 +214,23 @@
 		//인덱스가 넘어갈 수 있으므로 초기화
 		divList=[];
 		
-		//호텔리스트도 초기화
+		//호텔리스트도 초기화, 시간리스트도 초기화한다.
 		hotelList=[];
-		
+		timeList=[];
 		
 		for(let i=0;i<number;i++){
 			createHotoel(i);
 			hotelList.push('NO');	//초기화된 호텔리스트에 날짜 수만큼 안골랐음 을 넣는다!
-	}};
+			timeList.push('10');	//초기화된 시간리스트에 기본값 10시간을 넣는다.
+		}
+		
+		$ttt.value=timeList;
+		$timeList.value=timeList;
+		$hhh.value=hotelList;
+		$selectedHotel.value=hotelList;
+	    $sss.value = selectedLocationArray;
+		
+	};
 	
 	function changeStartTime(number){
 //		let $startTime=document.querySelector(`#startTime\${number}`);
@@ -231,15 +245,27 @@
 			alert('종료 시간이 시작 시간보다 적을 수 없습니다!');
 			$startTime.value="09:00:00";
 			$endTime.value="22:00:00";	
+			changeTimeList(number);
 			return
 		}
-		if((new Date("1970-01-01 "+$endTime.value)-new Date("1970-01-01 "+$startTime.value))/(3600*1000)>2){
-			alert((new Date("1970-01-01 "+$endTime.value)-new Date("1970-01-01 "+$startTime.value))/3600/1000)
+		if((new Date("1970-01-01 "+$endTime.value)-new Date("1970-01-01 "+$startTime.value))/(3600*1000)<2){
+			alert('최소 일정 시간은 2시간 이상입니다')
 			$startTime.value="09:00:00";
-			$endTime.value="22:00:00";	
-		}
+			$endTime.value="22:00:00";
+		}	
+		changeTimeList(number);
+		
 		
 	}
+	function changeTimeList(number) {
+		let $startTime=document.querySelector(`#startTime\${number}`);
+		let $endTime=document.querySelector(`#endTime\${number}`);
+		let diffTime=(new Date("1970-01-01 "+$endTime.value)-new Date("1970-01-01 "+$startTime.value))/3600/1000
+		timeList[number]=diffTime;
+		$ttt.value=timeList;
+		$timeList.value=timeList;
+		
+	};
     
 	//리스트들~
 	
@@ -369,7 +395,7 @@
     
     
 	changeStartDate();
-
+	
 
   </script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -377,9 +403,9 @@
    <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
 
 	<script
-		src="https://maps.googleapis.com/maps/api/js?key=InsertYourKey&callback=myMap"></script>
+		src="https://maps.googleapis.com/maps/api/js?key=InputYourKey&callback=myMap"></script>
 	<script src="/js/test.js"></script>
-	<!-- 일단 발급받은 api키. -->
+	<!--  일단 발급받은 api키. -->
 
 </body>
 

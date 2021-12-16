@@ -154,7 +154,7 @@
   </script>
 
   <script
-    src="https://maps.googleapis.com/maps/api/js?key=InsertyourKey&callback=myMap"></script>
+    src="https://maps.googleapis.com/maps/api/js?key=InputYourKey&callback=myMap"></script>
 
   <!--  일단 발급받은 api키. -->
 

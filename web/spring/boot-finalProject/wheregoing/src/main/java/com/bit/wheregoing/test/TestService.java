@@ -1,9 +1,18 @@
 package com.bit.wheregoing.test;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import org.json.simple.parser.JSONParser;
 
 import org.springframework.stereotype.Service;
 
@@ -11,6 +20,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class TestService {
 	
+	//갱신최단거리경로
 	public String shortest(String city,String locations) {
 
 		//city를 이용해서 DB에서 도시를 서치해서 출발지를 꺼내온다. 예시에서는 서울이니까 서울역을 가져옴
@@ -37,7 +47,7 @@ public class TestService {
 		for(int i=0;i<locationList.size();i++) {
 			double distance=0;
 			for(int j=i+1;j<locationList.size();j++) {
-				double newDistance = twoPointDistance(locationList.get(i).getLat(),locationList.get(i).getLng(), locationList.get(j).getLat(), locationList.get(j).getLng());
+				double newDistance = twoPointDistance(locationList.get(i),locationList.get(j));
 //				System.out.println(locationList.get(i).getLocations()+"과"+locationList.get(j).getLocations()+"의비교");
 //				System.out.println(newDistance);
 				if(distance==0) {
@@ -72,16 +82,21 @@ public class TestService {
 		return returnString;
 	}
 	
-	
-	public static double twoPointDistance(double a_lat, double a_lng, double b_lat, double b_lng) {
+	//두점사이의거리
+	public static double twoPointDistance(Location location, Location location2) {
+		double a_lat=location.getLat();
+		double a_lng=location.getLng();
+		double b_lat=location2.getLat();
+		double b_lng=location2.getLng();
+		
 		double distance = Math.sqrt(Math.pow((a_lat-b_lat),2)+Math.pow((a_lng-b_lng),2));
 		return distance;
 	}
-	//두점사이의거리
+	
 	
 	
 	public List<String> wg(int days, String city,String locations,String hotels) {
-		//days->몇일을 받을것인가? test에서는 3일기준으로 해보자.
+		//days->몇일을 받을것인가? 
 		//city->서울고정일것이다.
 		//locations->컴마로 구분된 스트링으로 위치들이 적혀있음
 		//hotels->컴마로 구분된 스트링으로 호텔 위치들이 적혀있음.
@@ -111,7 +126,6 @@ public class TestService {
 		//관광지를 이용해서 DB에서 위도경도를 꺼내온다. 일단 임의로 붙인다.
 		locationList=locationSet(locationList);
 		//호텔의 정보가 담긴 리스트->hotelList를 만든다. 똑같이 split을 한 다음에, 조금 다른것이 if문으로 NS일경우 LH로 보내자. 
-		//호텔을 6일까지 받았는데도 그냥 진행해도 된다. 왜냐? 어차피 daysList가 day길이만큼만 있을것이며, 즉 넘치는것은 전부 의미 없이 버리게 할 수 있다. 굿.
 		List<Location> hotelList = new ArrayList<Location>();
 		String[] hotelSplit = hotels.split(",");
 		for(int i=0;i<hotelSplit.length;i++) {
@@ -124,22 +138,25 @@ public class TestService {
 		///////////////////////////////
 		//선점하기
 		//i=0번에 각 기본 호텔을 보내면 될거 같은데?
-		
+	
 		for(int i=0;i<dayslist.size();i++) {
 			dayslist.get(i).add(hotelList.get(i));
 		}//해당 연산을 진행하면, 데이리스트(1)에는 서울역,1일차호텔. 데이리스트(2)에는 2일차호텔, 데이리스트(3)에는 3일차호텔... 이런식으로 데이리스트가 존재하는한 앞에서부터 호텔이 채워진다.
-		
-		
-		
-		//사용자 이용 시간을 받아야겠다. 정보를... 그것도 중요하다. ->일단 분배를 먼저 구현한 뒤, 나머지를 전부 1에다 몰아주는걸로 하자.
-		//사용자 시간을 받는것과 심층알고리즘은 그 다음에 진행하면 될 것 같다.
 				
-		for(int i=0;i<locationList.size();i++) {
-			dayslist.get(0).add(locationList.get(i));
-			dayslist.get(1).add(locationList.get(1));
-			dayslist.get(2).add(locationList.get(2));
+		//현재 1일차 인덱스 두개, 2일차~마지막날 1개인 상황.
+		for(int i=0;i<dayslist.size();i++) {
+			List<Double> distanceList = new ArrayList<Double>();
+			for(int j=0;j<locationList.size();j++) {
+			//두 점 사이의 거리중 가장 짧은 점을 찾는다. i일차의 마지막 지점과, 장소들 리스트 사이의 두점사이의 거리를 구한다. 이것을 리스트에 담자.
+				distanceList.add(twoPointDistance(dayslist.get(i).get(dayslist.get(i).size()-1),locationList.get(j)));
+				//최단거리를 찾고 그때의 j값을 알아야 하는데? j를 같이넣는다? 그럼소트가애매한데.
+				//리스트에 넣지 않고 해결하는 방법? 해시맵으로 이때의 j값에 따른 두점사이의 거리를 구해서, 밸류를 낮은순으로 소팅한 뒤 그때의 key값을 따면 j를 알 수 있다?
+				//거리가 적으면, 위치로 소트해버렸던 최단거리루트를 이용하는 방법은 어떤가?
+				//리스트에서 빼버리면되지 그룹된건.. .그러면 매번 리스트에서 가장 짧은걸 찾으면 된다. 만약 리스트가 원본보다 적다면, distance를 줄여서 다시 함수를 재귀 실행한다.
+			}
+			Collections.sort(distanceList); //최단거리순으로 소트가 완료됐다.
+			
 		}
-		
 		
 		
 
@@ -169,14 +186,14 @@ public class TestService {
 //			System.out.println(returnList.get(i));
 //		}
 //		
-		
-		
+//		System.out.println("데이터를받아보자");
+//		System.out.println(timeToDestination(dayslist.get(0).get(0),dayslist.get(0).get(1),dayslist.get(0).get(2)));
 		
 		
 		return returnList;
 	}
 	
-	//기본거리. 
+	//그룹화를 위한 기본거리. DB가 없어요..
 	public static double standardDistance(String city) {
 		double distance=0;
 		
@@ -368,7 +385,87 @@ public class TestService {
 		return hotelList;
 	}
 	
+	//카카오내비 길찾기에 REST API를 이용하여 A->B->C , A-B , B-C 사이의 거리를 정수값으로 변환된 시간을 받는 메소드 
+	public static String timeToDestination(Location first, Location second, Location third) {
+		String origin = first.getLng()+","+first.getLat();
+		String waypoints = second.getLng()+","+second.getLat();
+		String destination = third.getLng()+","+third.getLat();
+		String url = "https://apis-navi.kakaomobility.com/v1/directions?origin="+origin+"&destination="+destination+"&waypoints="+waypoints;
+		String addr = "";
+		try {
+			addr = getTimeToDestination(getJSONData(url));
+		}catch (Exception e) {
+			System.out.println("주소 api 요청 에러");
+			e.printStackTrace();
+		}
+		
+		return addr;
+	}
 	
+	//REST API로 통신하여 받은 JSON 형태의 데이터를 String으로 받아오는 메소드.
+	public static String getJSONData(String apiUrl) throws Exception {
+		
+		HttpURLConnection conn = null;
+		StringBuffer response = new StringBuffer();
+		
+		//인증키
+		String restAPIKey="InputYourKey";
+		String auth = "KakaoAK "+restAPIKey;
+		//URL 설정
+		URL url = new URL(apiUrl);
+		
+		conn = (HttpURLConnection) url.openConnection();
+		
+		//Request 형식 설정
+		conn.setRequestMethod("GET");
+		//conn.setRequestProperty("X-Requested-With", "curl"); ->왜 필요한가?
+		conn.setRequestProperty("Authorization", auth);
+		
+		//request에 JSON data 준비
+		conn.setDoOutput(true);
+		
+		int responseCode = conn.getResponseCode();
+		    if (responseCode == 400) {
+		        System.out.println("400:: 해당 명령을 실행할 수 없음");
+			} else if (responseCode == 401) {
+			    System.out.println("401:: Authorization가 잘못됨");
+			} else if (responseCode == 500) {
+			    System.out.println("500:: 서버 에러, 문의 필요");
+			} else { // 성공 후 응답 JSON 데이터받기
+		 
+				Charset charset = Charset.forName("UTF-8");
+				BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset));
+		     
+				String inputLine;
+		    while ((inputLine = br.readLine()) != null) {
+		     	response.append(inputLine); 
+		    } 
+		 }
+		 
+		 return response.toString();
+	}
 	
+	//받은 JSON 파일을 파싱한다.
+	public static String getTimeToDestination(String jsonString) {
+		String value="";
+		JSONObject jObj = (JSONObject) JSONValue.parse(jsonString);
+		
+		JSONArray routes = (JSONArray) jObj.get("routes");
+		JSONObject routesFirstArray = (JSONObject) routes.get(0);
+		JSONArray sectionsFirst = (JSONArray) routesFirstArray.get("sections");
+		JSONObject sectionFirstArray = (JSONObject) sectionsFirst.get(0);
+		long durationFirst = (long) sectionFirstArray.get("duration");
+		JSONObject sectionSecondArray = (JSONObject) sectionsFirst.get(1);
+		long durationSecond = (long) sectionSecondArray.get("duration");
+		
+		double firstHour = (double) durationFirst/3600;
+		double seconHour = (double) durationSecond/3600;
+		
+		String aa =  Double.toString(firstHour);
+		String bb =  Double.toString(seconHour);
+		
+		value = aa+"테스트"+bb;
+		return value;
+	}
 	
 }

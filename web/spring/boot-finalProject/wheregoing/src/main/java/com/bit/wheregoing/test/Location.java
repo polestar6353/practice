@@ -18,4 +18,7 @@ public class Location {
 	
 	private double lat;
 	private double lng;
+	
+	//그룹화를 위함.->DB에서는 null로 처리.
+	private String group;
 }
