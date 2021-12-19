@@ -158,7 +158,7 @@
 		changeEndDate();
 	};
 	function changeEndDate(){
-		let diffDays=(new Date($endDate.value)-new Date($startDate.value))/(1000*3600*24); //ms->sec에 1000 sec->hour에 3600 hour->day에 24 
+		let diffDays=((new Date($endDate.value)-new Date($startDate.value))/(1000*3600*24)); //ms->sec에 1000 sec->hour에 3600 hour->day에 24 
 		createho(diffDays);
 		$days.value = diffDays;
 		
@@ -403,7 +403,7 @@
    <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
 
 	<script
-		src="https://maps.googleapis.com/maps/api/js?key=InputYourKey&callback=myMap"></script>
+		src="https://maps.googleapis.com/maps/api/js?key=InsertYourKey&callback=myMap"></script>
 	<script src="/js/test.js"></script>
 	<!--  일단 발급받은 api키. -->
 

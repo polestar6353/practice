@@ -43,9 +43,9 @@ public class TestController {
 
 		
 		
-		String shortest = testservice.shortest(location.getCity(),location.getLocations());
+//		String shortest = testservice.shortest(location.getCity(),location.getLocations()); 최단거리. 안씀. 다 완성되면 지울것.
 		
-		List<String> dayslist = testservice.wg(days, location.getCity(), location.getLocations(), location.getHotels());
+		List<String> dayslist = testservice.wg(days, location.getCity(), location.getLocations(), location.getHotels(),timeList);
 		
 //		for(int i=0;i<dayslist.size();i++) {
 //			System.out.println(i+"박차 리스트");
