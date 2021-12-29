@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title> boardDetail.html </title>
+  <style type="text/css">
+    * {
+      font-size: 16pt;
+    }
+
+    a {
+      font-size: 16pt;
+      text-decoration: none;
+      color: green;
+      font-family: Comic Sans MS;
+    }
+
+    a:hover {
+      font-size: 20pt;
+      text-decoration: underline;
+      color: green;
+      font-family: Comic Sans MS;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  boardDetail.html 한건상세문서출력<br>
+  <table border="1" width="900" cellspacing="0" cellpadding="5px">
+    <tr align="center">
+      <td colspan="2">
+        {{ dto.name }} 님!!! 환영합니다 <<< </td>
+    </tr>
+
+    <tr>
+      <td width="250" rowspan="4" align="center">
+        {% if dto.img_file_name != "None" %}
+        <a href="/media/images/{{ dto.img_file_name }}" download>
+          <img src="/media/images/{{ dto.img_file_name }}" alt="img" width="350" height="200">
+        </a>
+        {% else %}
+        <img src="/media/images/{{ dto.img_file_name }}" alt="img" width="350" height="200">
+        {% endif %}
+      </td>
+      <td> 제목:{{ dto.title }} </td>
+    </tr>
+    <tr>
+      <td> 내용:{{ dto.content }} </td>
+    </tr>
+    <tr>
+      <td> 취미:{{ dto.hobby }} </td>
+    </tr>
+    <tr>
+      <td> 성별:{{ dto.gender }} </td>
+    </tr>
+
+    <tr align="center">
+      <td colspan="2">
+        <a href="boardDelete.do?idx={{ dto.hobby_idx }}">[삭제]</a>
+        <a href="boardEdit.do?idx={{ dto.hobby_idx }}">[수정]</a>
+        <a href="boardWrite.do">[하비등록]</a>
+        <a href="boardList.do">[하비전체출력]</a>
+
+        <a href="/">[index]</a>
+      </td>
+    </tr>
+  </table>
+
+  {% block header%}
+  {% include "./board_reply.html" %}
+  {% endblock %}
+</body>
+
+</html>

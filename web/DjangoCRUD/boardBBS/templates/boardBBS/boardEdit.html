@@ -1,0 +1,74 @@
+<html>
+<head>
+  <style type="text/css">
+   *{font-size: 16pt;  }
+   a{font-size: 16pt;   text-decoration:none; color:blue ;}
+   a:hover{font-size: 20pt; font-weight: bold;   text-decoration:underline; color:green ;  }
+  </style>
+
+ <title>boardEdit.html</title>
+</head>
+
+<body>
+ <font color=blue>[boardEdit.html=수정화면폼]</font> <br>
+
+  <form  method="post" enctype="multipart/form-data" action="boardEditSave.do" >
+      이름수정: <input type="text" name="name" value={{ dto.name }}> <br>
+      제목수정: <input type="text" name="title" value={{ dto.title }}> <br>
+      내용수정: <textarea rows="3" cols="20"  name="content">{{ dto.content }}</textarea> <br>
+      성별수정:
+      	   {% if dto.gender == 'man' %}
+      	 		<input type="radio" name="gender" value="man" checked>남자 
+      			<input type="radio" name="gender" value="woman">여자 <br>
+            {% else %}
+      	 		<input type="radio" name="gender" value="man">남자 
+      			<input type="radio" name="gender" value="woman" checked>여자 <br>
+      	   {% endif %}	
+      	 
+      취미수정:
+         {% if 'game' in dto.hobby %} 
+            <input type="checkbox" name="hobby" value="game" checked>게임
+         {% else %}
+            <input type="checkbox" name="hobby" value="game">게임
+	 	   {% endif %}
+         {% if 'study' in dto.hobby %} 
+		  	   <input type="checkbox" name="hobby" value="study" checked>공부
+	 	  	{% else %}
+            <input type="checkbox" name="hobby" value="study">공부
+         {% endif %}
+		   {% if 'ski' in dto.hobby %} 
+		      <input type="checkbox" name="hobby" value="ski" checked>스키
+         {% else %}
+            <input type="checkbox" name="hobby" value="ski">스키
+         {% endif %}
+         {% if 'movie' in dto.hobby %} 
+            <input type="checkbox" name="hobby" value="movie" checked>영화
+         {% else %}
+	 	  	   <input type="checkbox" name="hobby" value="movie">영화
+		   {% endif %}
+	  <br>
+
+      <input type="file" name="upload_f"  accept="image/*"><p>
+         
+      <input type="hidden" name="hobby_idx" value={{ dto.hobby_idx }}>
+      
+      <input type="submit" value="스프링hobby테이블수정">
+      <input type="reset" value="입력취소">
+
+  </form>  
+  
+ <p>
+ <h2>  
+   <a href="boardWrite.do">[board글쓰기]</a>
+   <a href="boardList.do">[board전체출력]</a>
+   <a href="/">[index]</a>
+ </h2>
+
+
+
+
+
+
+ 
+</body>
+</html>
