@@ -113,6 +113,7 @@ def board_list(request):
 
           for row in datas:
             data={"rn":round(row[0]),"hobby_idx":row[1],"name":row[2],"title":row[3],"content":row[4],"gender":row[5],"hobby":row[6],"img_file_name":row[7],"rcnt":row[8]}
+            #data={"rn":round(row[0]),"hobby_idx":row[1],"name":row[2],"title":row[3],"gender":row[4],"hobby":row[5],"img_file_name":row[6],"content":row[7],"rcnt":row[8]}
             lists.append(data)
 
 
@@ -156,6 +157,7 @@ def board_detail(request):
 
         for row in datas:
             data={"hobby_idx":row[0],"name":row[1],"title":row[2],"content":row[3],"gender":row[4],"hobby":row[5],"img_file_name":row[6]}
+            #data={"hobby_idx":row[0],"name":row[1],"title":row[2],"gender":row[3],"hobby":row[4],"img_file_name":row[5],"content":row[6]}
             dto.append(data)
 
         msg_reply = f""" select @ROWNUM:=@ROWNUM+1 as rrn, r.* from boardbbs_hobbyreply r,(SELECT @ROWNUM:=0) b where hobby_idx = {idx};"""
