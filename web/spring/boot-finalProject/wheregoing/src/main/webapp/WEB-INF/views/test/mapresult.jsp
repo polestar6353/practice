@@ -28,13 +28,13 @@
   <script>
   
   <c:forEach var="list" items="${list }">
-	 let ${list.code}={position :{lat:${list.lat}, lng: ${list.lng}}, label:'${list.name}', content:'${list.content}'};
+	 let ${list.code}={position :{lat:${list.lat}, lng: ${list.lng}, wcx:${list.wcongnamulx}, wcy:${list.wcongnamuly}}, label:'${list.name}', content:'${list.content}'};
   </c:forEach>
 	
-  let ${startpoint.code} ={position :{lat:${startpoint.lat}, lng:${startpoint.lng}}, label: '${startpoint.name}', content: '${startpoint.content}'} ;
+  let ${startpoint.code} ={position :{lat:${startpoint.lat}, lng:${startpoint.lng}, wcx:${startpoint.wcongnamulx}, wcy:${startpoint.wcongnamuly}}, label: '${startpoint.name}', content: '${startpoint.content}'};
    
   <c:forEach var="hotelList" items="${hotelList }">
-	let ${hotelList.code}={position :{lat:${hotelList.lat}, lng: ${hotelList.lng}}, label:'${hotelList.name}', content:'${hotelList.content}'};
+	let ${hotelList.code}={position :{lat:${hotelList.lat}, lng: ${hotelList.lng}, wcx:${hotelList.wcongnamulx}, wcy:${hotelList.wcongnamuly}}, label:'${hotelList.name}', content:'${hotelList.content}'};
   </c:forEach>
 	
 
@@ -196,9 +196,14 @@
   			for(let i=0;i<daysList[number].length;i++){
   				document.querySelector(`#dayPlan\${number}`).append(daysList[number][i].label);
     			if(i!=daysList[number].length-1){
-    				let kakaoTemplate=`https://map.kakao.com/?sX=\${daysList[number][i].position.lat}&sY=\${daysList[number][i].position.lng}&sName=%EC%9A%B0%EB%A6%AC%EC%A7%91&eX=\${daysList[number][i+1].position.lat}&eY=\${daysList[number][i+1].position.lng}&eName=%EB%84%88%ED%9D%AC%EC%A7%91`
-    				console.log(kakaoTemplate);
-    				document.querySelector(`#dayPlan\${number}`).append("->")
+    				let kakaoTemplate=`<a href="https://map.kakao.com/?sX=\${daysList[number][i].position.wcx}&sY=\${daysList[number][i].position.wcy}
+						&sName=\${daysList[number][i].label}&eX=\${daysList[number][i+1].position.wcx}&eY=\${daysList[number][i+1].position.wcy}&eName=\${daysList[number][i+1].label}"
+						target=_blank>-></a>`
+    				//console.log(kakaoTemplate);
+
+    				let span = document.createElement('span');
+    	    		span.innerHTML=kakaoTemplate;
+    				document.querySelector(`#dayPlan\${number}`).appendChild(span)
     				}
   			}
  
@@ -266,9 +271,9 @@
 </body>
 
   <script
-    src="https://maps.googleapis.com/maps/api/js?key=YourKey=myMap"></script>
+    src="https://maps.googleapis.com/maps/api/js?key=InsertYourKey&callback=myMap"></script>
 
-  <!-- 일단 발급받은 api키. -->
+  <!--  일단 발급받은 api키. -->
 
 
 </html>

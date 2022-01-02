@@ -17,7 +17,7 @@
     <body>
         <h1>지도테스트</h1>
         <div id="googleMap" style="width: 100%; height: 400px;"></div>
-        <form id="locationForm" action="/newmap-result">
+        <form id="locationForm" action="/jspnewmap-result">
             <label>얼마나 여행하실 예정인가요?
             </label><br>
             <label>시작 날짜를 골라주세요 :</label>
@@ -217,9 +217,8 @@
     	<c:forEach var="list" items="${list }">
 		  $${list.code},
 	    </c:forEach>
-    	
-    	
     	];
+	
     let selectedLocationArray = [];
 	
     
@@ -240,7 +239,6 @@
       $selected.innerHTML = `현재 선택된 값은 \${selectedLocationArray} 입니다 `;
       $selectedValue.value = selectedLocationArray;
       $sss.value = selectedLocationArray;
-
     }
 	
 
@@ -325,9 +323,9 @@
    <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
 
 	<script
-		src="https://maps.googleapis.com/maps/api/js?key=YourKey=myMap"></script>
+		src="https://maps.googleapis.com/maps/api/js?key=InsertYourKey&callback=myMap"></script>
 	<script src="/js/test.js"></script>
-	<!-- 일단 발급받은 api키. -->
+	<!--  일단 발급받은 api키. -->
 
 </body>
 
